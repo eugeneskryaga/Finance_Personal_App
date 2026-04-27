@@ -1,3 +1,9 @@
+import { Today } from "../components/Today/Today";
+
 export const DashboardPage = () => {
-  return <h1>Dashboard Page</h1>;
+  return (
+    <section>
+      <Today />
+    </section>
+  );
 };

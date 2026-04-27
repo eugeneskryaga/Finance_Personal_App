@@ -1,0 +1,11 @@
+.ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: space-around;
+}
+
+.ul li {
+    color: #A7F3D0;
+}

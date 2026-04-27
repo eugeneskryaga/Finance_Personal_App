@@ -1,0 +1,12 @@
+.header {
+    text-align: center;
+    background-color: #0F2A1F;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.main {
+    width: 400px;
+    margin-bottom: 20px;
+}

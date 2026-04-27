@@ -1,12 +1,16 @@
-type ExpenseCategory = "road" | "meal" | "habits" | "living" | "entertainment";
-
-export interface Income {
-  id: string;
-  amount: number;
-  note: string;
-  date: string;
+export interface Expenses {
+  total: number;
+  road: number;
+  meal: number;
+  habits: number;
+  living: number;
+  entertainment: number;
 }
 
-export interface Expense extends Income {
-  category: ExpenseCategory;
+export interface Transaction {
+  id: string;
+  income: number;
+  expenses: Expenses;
+  note: string;
+  date: string;
 }
