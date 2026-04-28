@@ -70,7 +70,7 @@ export const TransactionForm = ({ id }: Props) => {
         road: Number(values.road),
         entertainment: Number(values.entertainment),
       },
-      date: new Date().toLocaleDateString(),
+      date: new Date().toISOString().split("T")[0],
     };
     if (id) {
       editMutation.mutate({ id, data: transaction });

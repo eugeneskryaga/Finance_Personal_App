@@ -10,12 +10,11 @@ export const Today = () => {
     queryFn: async () => await fetchTransactions(),
   });
 
-  const currentDate = new Date().toLocaleDateString();
-
-  const currentTransaction = transactions?.filter(
+  const currentTransaction = transactions?.find(
     transaction =>
-      new Date(transaction.date).toLocaleDateString() !== currentDate,
-  )[0];
+      new Date(transaction.date).toISOString().split("T")[0] ===
+      new Date().toISOString().split("T")[0],
+  );
 
   let income = 0;
   let expenses = 0;
@@ -26,7 +25,6 @@ export const Today = () => {
     expenses = currentTransaction.expenses.total;
     balance = income - expenses;
   }
-
   return (
     <div className={css.container}>
       <h1 className={css.title}>BALANCE: {balance}</h1>
