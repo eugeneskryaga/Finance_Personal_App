@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(7, 26, 18, 0.78);
+    background: rgba(4, 15, 10, 0.78);
     backdrop-filter: blur(6px);
 }
 
