@@ -4,7 +4,7 @@ body {
   color: #A7F3D0;
   display: flex;
   justify-content: center;
-  padding: 20%;
+  padding-top: 15vh;
 }
 
 ul {
@@ -16,7 +16,7 @@ ul {
 button {
   cursor: pointer;
   background-color: #0F2A1F;
-  color: #ECFDF5;
+  color: #A7F3D0;
   border: none;
 }
 
