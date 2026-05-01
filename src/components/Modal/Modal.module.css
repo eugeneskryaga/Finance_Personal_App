@@ -30,5 +30,5 @@
 
 .close_btn {
     align-self: center;
-    justify-self: flex-end;
+    margin-left: auto;
 }
