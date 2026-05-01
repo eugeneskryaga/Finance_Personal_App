@@ -53,7 +53,10 @@ export const Today = () => {
       ) : (
         <p>No transactions yet</p>
       )}
-      <button onClick={handleModalBtn}>
+      <button
+        onClick={handleModalBtn}
+        className={css.open_modal_btn}
+      >
         <span className={css.btn_icon}>+</span>
       </button>
       {isModalOpen && (

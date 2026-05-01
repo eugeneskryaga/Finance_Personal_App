@@ -17,6 +17,9 @@
     height: 50px;
     border-radius: 50%;
     background-color: #071A12;
+}
+
+.open_modal_btn {
     margin-left: auto;
 }
 
