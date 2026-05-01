@@ -15,6 +15,9 @@ ul {
 
 button {
   cursor: pointer;
+  background-color: #0F2A1F;
+  color: #ECFDF5;
+  border: none;
 }
 
 h1, h2, h3, p {

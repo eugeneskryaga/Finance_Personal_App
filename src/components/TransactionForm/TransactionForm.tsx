@@ -86,53 +86,46 @@ export const TransactionForm = ({ id }: Props) => {
       onSubmit={handleSubmit}
     >
       <Form className={css.form}>
-        <fieldset className={css.fieldset}>
-          <legend>Income</legend>
-          <Field
-            type="text"
-            name="income"
-            placeholder="Income"
-          />
-          <Field
-            type="text"
-            name="note"
-            placeholder="Note"
-          />
-        </fieldset>
-        <fieldset className={css.fieldset}>
-          <legend>Expenses</legend>
+        <strong>Income</strong>
+        <Field
+          type="text"
+          name="income"
+          placeholder="Income"
+        />
+        <Field
+          type="text"
+          name="note"
+          placeholder="Note"
+        />
+        <strong>Expenses</strong>
+        <div className={css.expenses}>
           <Field
             type="text"
             name="living"
             placeholder="Living"
-            className={css.input}
           />
           <Field
             type="text"
             name="meal"
             placeholder="Meal"
-            className={css.input}
           />
           <Field
             type="text"
             name="habits"
             placeholder="Habits"
-            className={css.input}
           />
           <Field
             type="text"
             name="road"
             placeholder="Road"
-            className={css.input}
           />
           <Field
             type="text"
             name="entertainment"
             placeholder="Entertainment"
-            className={css.input}
           />
-        </fieldset>
-        <button type="submit">ADD</button>
+        </div>
+        <button type="submit">Add</button>
       </Form>
     </Formik>
   );

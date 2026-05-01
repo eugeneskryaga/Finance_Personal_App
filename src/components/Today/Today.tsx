@@ -3,12 +3,16 @@ import css from "./Today.module.css";
 import { fetchTransactions } from "../../api/transactionsApi";
 import { TodayTransactions } from "../TodayTransactions/TodayTransactions";
 import { TransactionForm } from "../TransactionForm/TransactionForm";
+import { useState } from "react";
+import { Modal } from "../Modal/Modal";
 
 export const Today = () => {
   const { data: transactions } = useQuery({
     queryKey: ["transactions"],
     queryFn: async () => await fetchTransactions(),
   });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const currentTransaction = transactions?.find(
     transaction =>
@@ -25,9 +29,15 @@ export const Today = () => {
     expenses = currentTransaction.expenses.total;
     balance = income - expenses;
   }
+
+  const handleModalBtn = () => {
+    setIsModalOpen(prev => !prev);
+  };
+
   return (
     <div className={css.container}>
       <h1 className={css.title}>BALANCE: {balance}</h1>
+      <strong className={css.note}>{currentTransaction?.note}</strong>
       <div className={css.innerContainer}>
         <div className={css.income}>
           <p>{income}</p>
@@ -43,10 +53,17 @@ export const Today = () => {
       ) : (
         <p>No transactions yet</p>
       )}
-      {currentTransaction ? (
-        <TransactionForm id={currentTransaction.id} />
-      ) : (
-        <TransactionForm />
+      <button onClick={handleModalBtn}>
+        <span className={css.btn_icon}>+</span>
+      </button>
+      {isModalOpen && (
+        <Modal onClose={handleModalBtn}>
+          {currentTransaction ? (
+            <TransactionForm id={currentTransaction.id} />
+          ) : (
+            <TransactionForm />
+          )}
+        </Modal>
       )}
     </div>
   );
