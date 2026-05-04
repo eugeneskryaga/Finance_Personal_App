@@ -8,7 +8,7 @@ import { Modal } from "../Modal/Modal";
 
 export const Today = () => {
   const { data: transactions } = useQuery({
-    queryKey: ["transactions"],
+    queryKey: ["allTransactions"],
     queryFn: async () => await fetchTransactions(),
   });
 
@@ -62,9 +62,12 @@ export const Today = () => {
       {isModalOpen && (
         <Modal onClose={handleModalBtn}>
           {currentTransaction ? (
-            <TransactionForm id={currentTransaction.id} />
+            <TransactionForm
+              id={currentTransaction.id}
+              setIsModalOpen={setIsModalOpen}
+            />
           ) : (
-            <TransactionForm />
+            <TransactionForm setIsModalOpen={setIsModalOpen} />
           )}
         </Modal>
       )}

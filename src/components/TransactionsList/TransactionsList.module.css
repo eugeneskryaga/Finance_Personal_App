@@ -1,0 +1,42 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;margin-bottom: 20px;
+}
+
+.list strong {
+    display: block;
+    text-align: center;
+}
+
+.main {
+    display: flex;
+    justify-content: space-between;
+}
+
+.main p {
+    margin-bottom: 6px;
+}
+
+.list button { 
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #071A12;
+    width: 100%;
+}
+
+.list li {
+    background-color: #0F2A1F;
+    padding: 10px;
+    border-radius: 9px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.controls button {
+    border-radius: 8px;
+}

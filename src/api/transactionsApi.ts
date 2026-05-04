@@ -8,8 +8,20 @@ const api = axios.create({
 });
 
 export const fetchTransactions = async () => {
-  const { data } = await api.get<Transaction[]>("/income");
-  return data;
+  return (await api.get<Transaction[]>("/income")).data;
+};
+
+export const fetchPaginatedTransactions = async (page: number) => {
+  return (
+    await api.get<Transaction[]>("/income", {
+      params: {
+        page,
+        limit: 3,
+        sortBy: "date",
+        order: "desc",
+      },
+    })
+  ).data;
 };
 
 export const addTransaction = async (newTransaction: Transaction) => {

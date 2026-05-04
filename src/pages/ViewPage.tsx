@@ -1,3 +1,5 @@
+import { TransactionsList } from "../components/TransactionsList/TransactionsList";
+
 export const ViewPage = () => {
-  return <h2>View Page</h2>;
+  return <TransactionsList />;
 };

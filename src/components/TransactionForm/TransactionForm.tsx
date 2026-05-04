@@ -4,12 +4,14 @@ import { addTransaction, editTransaction } from "../../api/transactionsApi";
 
 import css from "./TransactionForm.module.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type React from "react";
 
 interface Props {
   id?: Transaction["id"];
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const TransactionForm = ({ id }: Props) => {
+export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
   const queryClient = useQueryClient();
 
   const addMutation = useMutation({
@@ -77,6 +79,7 @@ export const TransactionForm = ({ id }: Props) => {
     } else {
       addMutation.mutate(transaction);
     }
+    setIsModalOpen(prev => !prev);
     formikHelpers.resetForm();
   };
 
