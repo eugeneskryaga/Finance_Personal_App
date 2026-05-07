@@ -1,11 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { fetchPaginatedTransactions } from "../../api/transactionsApi";
+import { TransactionsListControls } from "../TransactionsListControls/TransactionsListControls";
 
 import css from "./TransactionsList.module.css";
+import { Modal } from "../Modal/Modal";
+import { TransactionForm } from "../TransactionForm/TransactionForm";
+import type { Transaction } from "../../types/types";
 
 export const TransactionsList = () => {
   const [page, setPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState("");
 
   const { data: transactions } = useQuery({
     queryKey: ["transactions", page],
@@ -13,9 +19,15 @@ export const TransactionsList = () => {
     placeholderData: previousTransactions => previousTransactions,
   });
 
+  const handleEditTransaction = (id: Transaction["id"]) => {
+    setIsModalOpen(true);
+    setSelectedId(id);
+  };
+
   return (
     transactions && (
       <>
+        <TransactionsListControls />
         <ul className={css.list}>
           {transactions?.map(transaction => (
             <li key={transaction.id}>
@@ -37,7 +49,9 @@ export const TransactionsList = () => {
                   <p>Expenses: {transaction.expenses.total}</p>
                 </div>
               </div>
-              <button>Edit transaction</button>
+              <button onClick={() => handleEditTransaction(transaction.id)}>
+                Edit transaction
+              </button>
             </li>
           ))}
         </ul>
@@ -50,6 +64,14 @@ export const TransactionsList = () => {
             <button onClick={() => setPage(prev => prev + 1)}>Next</button>
           )}
         </div>
+        {isModalOpen && (
+          <Modal onClose={() => setIsModalOpen(prev => !prev)}>
+            <TransactionForm
+              id={selectedId}
+              setIsModalOpen={setIsModalOpen}
+            />
+          </Modal>
+        )}
       </>
     )
   );

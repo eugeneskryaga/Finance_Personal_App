@@ -86,6 +86,7 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
   return (
     <Formik
       initialValues={initialValues}
+      enableReinitialize
       onSubmit={handleSubmit}
     >
       <Form className={css.form}>

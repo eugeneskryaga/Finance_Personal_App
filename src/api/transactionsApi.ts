@@ -11,6 +11,10 @@ export const fetchTransactions = async () => {
   return (await api.get<Transaction[]>("/income")).data;
 };
 
+export const fetchTransactionById = async (id: Transaction["id"]) => {
+  return (await api.get<Transaction>(`/income/${id}`)).data;
+};
+
 export const fetchPaginatedTransactions = async (page: number) => {
   return (
     await api.get<Transaction[]>("/income", {
