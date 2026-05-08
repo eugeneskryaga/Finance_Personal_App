@@ -17,7 +17,8 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
   const addMutation = useMutation({
     mutationFn: addTransaction,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["allTransactions"] });
+      setIsModalOpen(prev => !prev);
     },
   });
 
@@ -25,7 +26,8 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
     mutationFn: ({ id, data }: { id: Transaction["id"]; data: Transaction }) =>
       editTransaction(id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["allTransactions"] });
+      setIsModalOpen(prev => !prev);
     },
   });
 
@@ -61,7 +63,7 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
       Number(values.entertainment);
 
     const transaction: Transaction = {
-      id: crypto.randomUUID(),
+      id: id ?? crypto.randomUUID(),
       income: Number(values.income),
       note: values.note,
       expenses: {
@@ -79,7 +81,6 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
     } else {
       addMutation.mutate(transaction);
     }
-    setIsModalOpen(prev => !prev);
     formikHelpers.resetForm();
   };
 

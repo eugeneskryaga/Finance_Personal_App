@@ -9,7 +9,7 @@ import { Modal } from "../Modal/Modal";
 export const Today = () => {
   const { data: transactions } = useQuery({
     queryKey: ["allTransactions"],
-    queryFn: async () => await fetchTransactions(),
+    queryFn: fetchTransactions,
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
