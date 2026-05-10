@@ -55,7 +55,7 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
     values: FormValues,
     formikHelpers: FormikHelpers<FormValues>,
   ) => {
-    const total =
+    const totalExpenses =
       Number(values.living) +
       Number(values.meal) +
       Number(values.habits) +
@@ -66,8 +66,8 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
       id: id ?? crypto.randomUUID(),
       income: Number(values.income),
       note: values.note,
+      totalExpenses,
       expenses: {
-        total,
         living: Number(values.living),
         meal: Number(values.meal),
         habits: Number(values.habits),
