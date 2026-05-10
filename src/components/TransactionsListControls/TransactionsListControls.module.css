@@ -14,6 +14,7 @@
     border: none;
     border-radius: 8px;
     color: #A7F3D0;
+    padding-inline: 6px;
 }
 
 .container input::placeholder {
