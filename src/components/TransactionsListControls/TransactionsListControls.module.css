@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #0F2A1F;
+    border-radius: 9px;
+}
+
+.container input, select {
+    width: 100px;
+    height: 30px;
+    background-color: #071A12;
+    border: none;
+    border-radius: 8px;
+    color: #A7F3D0;
+}
+
+.container input::placeholder {
+    color: #A7F3D0;
+}

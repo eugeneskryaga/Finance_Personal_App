@@ -26,7 +26,7 @@ export const Today = () => {
 
   if (currentTransaction) {
     income = currentTransaction.income;
-    expenses = currentTransaction.expenses.total;
+    expenses = currentTransaction.totalExpenses;
     balance = income - expenses;
   }
 

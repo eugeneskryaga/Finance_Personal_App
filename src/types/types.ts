@@ -1,5 +1,4 @@
 export interface Expenses {
-  total: number;
   road: number;
   meal: number;
   habits: number;
@@ -10,7 +9,10 @@ export interface Expenses {
 export interface Transaction {
   id: string;
   income: number;
+  totalExpenses: number;
   expenses: Expenses;
   note: string;
   date: string;
 }
+
+export type Order = "asc" | "desc";

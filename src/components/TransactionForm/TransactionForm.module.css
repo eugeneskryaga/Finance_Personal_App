@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
+    color: #A7F3D0;
 }
 
 .form input {
@@ -10,13 +11,13 @@
     height: 30px;
     border-radius: 8px;
     background-color: #0F2A1F;
+    color: #A7F3D0;
     border: none;
     padding: 4px;
-    color: #ECFDF5;
 }
 
 .form input::placeholder {
-    color: #ECFDF5;
+    color: #A7F3D0;
 }
 
 .form input:focus {

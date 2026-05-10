@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Transaction } from "../types/types";
+import type { Order, Transaction } from "../types/types";
 
 const BASE_URL = "https://69ed1d12af4ff533142ba1f8.mockapi.io/api";
 
@@ -15,14 +15,20 @@ export const fetchTransactionById = async (id: Transaction["id"]) => {
   return (await api.get<Transaction>(`/income/${id}`)).data;
 };
 
-export const fetchPaginatedTransactions = async (page: number) => {
+export const fetchPaginatedTransactions = async (
+  page: number,
+  date?: Transaction["date"],
+  sortBy: string = "date",
+  order: Order = "desc",
+) => {
   return (
     await api.get<Transaction[]>("/income", {
       params: {
         page,
         limit: 3,
-        sortBy: "date",
-        order: "desc",
+        sortBy,
+        order,
+        ...(date && { date }),
       },
     })
   ).data;
