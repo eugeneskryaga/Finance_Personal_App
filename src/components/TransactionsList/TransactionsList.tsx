@@ -44,7 +44,7 @@ export const TransactionsList = () => {
         setOrder={setOrder}
       />
       {transactions && transactions.length > 0 ? (
-        <>
+        <section>
           <ul className={css.list}>
             {transactions?.map(transaction => (
               <li key={transaction.id}>
@@ -89,7 +89,7 @@ export const TransactionsList = () => {
               />
             </Modal>
           )}
-        </>
+        </section>
       ) : (
         <p>There is no transactions</p>
       )}

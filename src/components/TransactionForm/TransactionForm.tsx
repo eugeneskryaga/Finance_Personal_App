@@ -18,7 +18,6 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
     mutationFn: addTransaction,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["allTransactions"] });
-      setIsModalOpen(prev => !prev);
     },
   });
 
@@ -27,7 +26,6 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
       editTransaction(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["allTransactions"] });
-      setIsModalOpen(prev => !prev);
     },
   });
 
@@ -82,6 +80,7 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
       addMutation.mutate(transaction);
     }
     formikHelpers.resetForm();
+    setIsModalOpen(prev => !prev);
   };
 
   return (

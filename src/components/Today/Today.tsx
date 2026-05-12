@@ -35,7 +35,7 @@ export const Today = () => {
   };
 
   return (
-    <div className={css.container}>
+    <section className={css.container}>
       <h1 className={css.title}>BALANCE: {balance}</h1>
       <strong className={css.note}>{currentTransaction?.note}</strong>
       <div className={css.innerContainer}>
@@ -71,6 +71,6 @@ export const Today = () => {
           )}
         </Modal>
       )}
-    </div>
+    </section>
   );
 };
