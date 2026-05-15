@@ -1,7 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchTransactions } from "../../api/transactionsApi";
+import { calculateTotal } from "../../utils/calculations";
 
 import css from "./Statistics.module.css";
+import { StatisticsComparison } from "../StatisticsComparison/StatisticsComparison";
+import { Notification } from "../Notification/Notification";
 
 export const Statistics = () => {
   const { data: transactions } = useQuery({
@@ -13,90 +16,71 @@ export const Statistics = () => {
     month: "long",
   });
 
-  const currentMonthTransactions = transactions?.filter(transaction => {
-    const date = new Date(transaction.date);
-    const currentDate = new Date();
+  const currentDate = new Date();
 
-    return (
-      date.getMonth() === currentDate.getMonth() &&
-      date.getFullYear() === currentDate.getFullYear()
-    );
-  });
+  const previousMonth =
+    currentDate.getMonth() === 0 ? 11 : currentDate.getMonth() - 1;
 
-  const totalExpensesByCategory = currentMonthTransactions?.reduce(
-    (acc, transaction) => {
-      acc.road += transaction.expenses.road;
-      acc.meal += transaction.expenses.meal;
-      acc.habits += transaction.expenses.habits;
-      acc.living += transaction.expenses.living;
-      acc.entertainment += transaction.expenses.entertainment;
-      acc.total += transaction.totalExpenses;
+  const previousYear =
+    currentDate.getMonth() === 0
+      ? currentDate.getFullYear() - 1
+      : currentDate.getFullYear();
 
-      return acc;
-    },
-    {
-      living: 0,
-      meal: 0,
-      habits: 0,
-      road: 0,
-      entertainment: 0,
-      total: 0,
-    },
-  );
+  const previousMonthName = new Date(
+    previousYear,
+    previousMonth,
+  ).toLocaleString("en-US", { month: "long", year: "numeric" });
 
-  const highestIncomeTransaction = transactions?.reduce((max, transaction) =>
-    transaction.income > max.income ? transaction : max,
-  );
+  const currentMonthTransactions =
+    transactions?.filter(transaction => {
+      const date = new Date(transaction.date);
+      return (
+        date.getMonth() === currentDate.getMonth() &&
+        date.getFullYear() === currentDate.getFullYear()
+      );
+    }) || [];
 
-  const highestExpensesTransaction = transactions?.reduce((max, transaction) =>
-    transaction.totalExpenses > max.totalExpenses ? transaction : max,
-  );
+  const previousMonthTransactions =
+    transactions?.filter(transaction => {
+      const date = new Date(transaction.date);
+      return (
+        date.getMonth() === previousMonth && date.getFullYear() === previousYear
+      );
+    }) || [];
 
-  return (
-    currentMonthTransactions &&
-    currentMonthTransactions?.length > 0 && (
-      <section className={css.container}>
-        <h1>Overall balance: </h1>
-        {highestIncomeTransaction && highestExpensesTransaction && (
-          <div className={css.highest}>
-            <div>
-              <strong>Highest income</strong>
-              <p>Date: {highestIncomeTransaction?.date}</p>
-              <p>
-                Balance:{" "}
-                {highestIncomeTransaction?.income -
-                  highestIncomeTransaction?.totalExpenses}
-              </p>
-              <p>Income: {highestIncomeTransaction?.income}</p>
-              <p>Expenses: {highestIncomeTransaction?.totalExpenses}</p>
-              <button>Details</button>
-            </div>
-            <div>
-              <strong>Highest expenses</strong>
-              <p>Date: {highestExpensesTransaction?.date}</p>
-              <p>
-                Balance:{" "}
-                {highestExpensesTransaction?.income -
-                  highestExpensesTransaction?.totalExpenses}
-              </p>
-              <p>Income: {highestExpensesTransaction?.income}</p>
-              <p>Expenses: {highestExpensesTransaction?.totalExpenses}</p>
-              <button>Details</button>
-            </div>
-          </div>
-        )}
-        <div className={css.month}>
-          <h2>Expenses for {currentMonth}</h2>
-          <div>
-            <strong>Total: {totalExpensesByCategory?.total}</strong>
-            <p>Living: {totalExpensesByCategory?.living}</p>
-            <p>Meal: {totalExpensesByCategory?.meal}</p>
-            <p>Habits: {totalExpensesByCategory?.habits}</p>
-            <p>Road: {totalExpensesByCategory?.road}</p>
-            <p>Entertainment: {totalExpensesByCategory?.entertainment}</p>
-          </div>
-        </div>
-      </section>
-    )
+  const currentMonthTotal = calculateTotal(currentMonthTransactions);
+
+  const previousMonthTotal = calculateTotal(previousMonthTransactions);
+
+  return currentMonthTotal ? (
+    <section className={css.container}>
+      <div>
+        <h1>Total for {currentMonth}</h1>
+        <p>Total income: {currentMonthTotal.income}</p>
+        <p>Total expenses: {currentMonthTotal.totalExpenses}</p>
+        <p>
+          Balance: {currentMonthTotal.income - currentMonthTotal.totalExpenses}
+        </p>
+      </div>
+      <div>
+        <h2>Expenses for {currentMonth}</h2>
+        <p>Living: {currentMonthTotal.living}</p>
+        <p>Meal: {currentMonthTotal.meal}</p>
+        <p>Habits: {currentMonthTotal.habits}</p>
+        <p>Road: {currentMonthTotal.road}</p>
+        <p>Entertainment: {currentMonthTotal.entertainment}</p>
+      </div>
+      {previousMonthTotal ? (
+        <StatisticsComparison
+          currentMonthTotal={currentMonthTotal}
+          previousMonthTotal={previousMonthTotal}
+          previousMonthName={previousMonthName}
+        />
+      ) : (
+        <Notification message={`No trasactions for ${previousMonthName}`} />
+      )}
+    </section>
+  ) : (
+    <Notification message="No transactions for current month" />
   );
 };

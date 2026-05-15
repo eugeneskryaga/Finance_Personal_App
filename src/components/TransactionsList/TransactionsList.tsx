@@ -2,12 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { fetchPaginatedTransactions } from "../../api/transactionsApi";
 import { TransactionsListControls } from "../TransactionsListControls/TransactionsListControls";
-
-import css from "./TransactionsList.module.css";
 import { Modal } from "../Modal/Modal";
 import { TransactionForm } from "../TransactionForm/TransactionForm";
-import type { Order, Transaction } from "../../types/types";
 import { useDebounce } from "use-debounce";
+
+import type { Order, Transaction } from "../../types/types";
+
+import css from "./TransactionsList.module.css";
+import { Notification } from "../Notification/Notification";
 
 export const TransactionsList = () => {
   const [page, setPage] = useState(1);
@@ -46,7 +48,7 @@ export const TransactionsList = () => {
       {transactions && transactions.length > 0 ? (
         <section>
           <ul className={css.list}>
-            {transactions?.map(transaction => (
+            {transactions.map(transaction => (
               <li key={transaction.id}>
                 <strong>{transaction.date}</strong>
                 <div className={css.main}>
@@ -91,7 +93,7 @@ export const TransactionsList = () => {
           )}
         </section>
       ) : (
-        <p>There is no transactions</p>
+        <Notification message="There is no transactions yet" />
       )}
     </>
   );

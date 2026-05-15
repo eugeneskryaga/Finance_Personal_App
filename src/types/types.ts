@@ -15,4 +15,14 @@ export interface Transaction {
   date: string;
 }
 
+export interface TransactionsTotal {
+  income: number;
+  totalExpenses: number;
+  living: number;
+  meal: number;
+  habits: number;
+  road: number;
+  entertainment: number;
+}
+
 export type Order = "asc" | "desc";

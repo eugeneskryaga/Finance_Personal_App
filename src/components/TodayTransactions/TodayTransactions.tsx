@@ -30,7 +30,7 @@ export const TodayTransactions = ({ transaction }: Props) => {
         {icons.transport} Road: {transaction.expenses.road}
       </li>
       <li>
-        {icons.game} Enternainment: {transaction.expenses.entertainment}
+        {icons.game} Entertainment: {transaction.expenses.entertainment}
       </li>
     </ul>
   );
