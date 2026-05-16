@@ -5,16 +5,16 @@ import { TransactionsListControls } from "../TransactionsListControls/Transactio
 import { Modal } from "../Modal/Modal";
 import { TransactionForm } from "../TransactionForm/TransactionForm";
 import { useDebounce } from "use-debounce";
+import { Notification } from "../Notification/Notification";
 
 import type { Order, Transaction } from "../../types/types";
 
 import css from "./TransactionsList.module.css";
-import { Notification } from "../Notification/Notification";
 
 export const TransactionsList = () => {
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState("");
+  const [selectedId, setSelectedId] = useState<Transaction["id"]>("");
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("date");
   const [order, setOrder] = useState<Order>("desc");
@@ -66,7 +66,7 @@ export const TransactionsList = () => {
                 <div className={css.main}>
                   <div>
                     <p>Living: {transaction.expenses.living}</p>
-                    <p>Meal: {transaction.expenses.meal}</p>
+                    <p>Food: {transaction.expenses.food}</p>
                     <p>Habits: {transaction.expenses.habits}</p>
                     <p>Road: {transaction.expenses.road}</p>
                     <p>Entertainment: {transaction.expenses.entertainment}</p>

@@ -1,10 +1,15 @@
-import { Field, Form, Formik, type FormikHelpers } from "formik";
+import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from "formik";
+import {
+  addTransaction,
+  editTransaction,
+  fetchTransactionById,
+} from "../../api/transactionsApi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import * as yup from "yup";
+import type React from "react";
 import type { Transaction } from "../../types/types";
-import { addTransaction, editTransaction } from "../../api/transactionsApi";
 
 import css from "./TransactionForm.module.css";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type React from "react";
 
 interface Props {
   id?: Transaction["id"];
@@ -13,6 +18,12 @@ interface Props {
 
 export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
   const queryClient = useQueryClient();
+
+  const { data: transaction } = useQuery({
+    queryKey: ["transaction"],
+    queryFn: () => fetchTransactionById(id!),
+    enabled: !!id,
+  });
 
   const addMutation = useMutation({
     mutationFn: addTransaction,
@@ -29,24 +40,63 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
     },
   });
 
+  const validationSchema = yup.object({
+    income: yup
+      .string()
+      .matches(/^\d+$/, "Only numbers are allowed")
+      .required("Required"),
+
+    note: yup
+      .string()
+      .trim()
+      .min(2, "Minimum 2 characters")
+      .max(100, "Maximum 100 characters")
+      .required("Required"),
+
+    living: yup
+      .string()
+      .matches(/^\d+$/, "Only numbers are allowed")
+      .required("Required"),
+
+    food: yup
+      .string()
+      .matches(/^\d+$/, "Only numbers are allowed")
+      .required("Required"),
+
+    habits: yup
+      .string()
+      .matches(/^\d+$/, "Only numbers are allowed")
+      .required("Required"),
+
+    road: yup
+      .string()
+      .matches(/^\d+$/, "Only numbers are allowed")
+      .required("Required"),
+
+    entertainment: yup
+      .string()
+      .matches(/^\d+$/, "Only numbers are allowed")
+      .required("Required"),
+  });
+
   interface FormValues {
     income: string;
     note: string;
     road: string;
-    meal: string;
+    food: string;
     habits: string;
     living: string;
     entertainment: string;
   }
 
   const initialValues: FormValues = {
-    income: "",
-    note: "",
-    road: "",
-    meal: "",
-    habits: "",
-    living: "",
-    entertainment: "",
+    income: transaction?.income?.toString() || "",
+    note: transaction?.note || "",
+    road: transaction?.expenses?.road?.toString() || "",
+    food: transaction?.expenses?.food?.toString() || "",
+    habits: transaction?.expenses?.habits?.toString() || "",
+    living: transaction?.expenses?.living?.toString() || "",
+    entertainment: transaction?.expenses?.entertainment?.toString() || "",
   };
 
   const handleSubmit = (
@@ -55,19 +105,18 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
   ) => {
     const totalExpenses =
       Number(values.living) +
-      Number(values.meal) +
+      Number(values.food) +
       Number(values.habits) +
       Number(values.road) +
       Number(values.entertainment);
 
     const transaction: Transaction = {
-      id: id ?? crypto.randomUUID(),
       income: Number(values.income),
       note: values.note,
       totalExpenses,
       expenses: {
         living: Number(values.living),
-        meal: Number(values.meal),
+        food: Number(values.food),
         habits: Number(values.habits),
         road: Number(values.road),
         entertainment: Number(values.entertainment),
@@ -86,48 +135,102 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
   return (
     <Formik
       initialValues={initialValues}
+      validationSchema={validationSchema}
+      validateOnChange={false}
+      validateOnBlur
       enableReinitialize
       onSubmit={handleSubmit}
     >
       <Form className={css.form}>
         <strong>Income</strong>
-        <Field
-          type="text"
-          name="income"
-          placeholder="Income"
-        />
-        <Field
-          type="text"
-          name="note"
-          placeholder="Note"
-        />
+        <label>
+          Note:
+          <Field
+            type="text"
+            name="note"
+            className={css.wide_input}
+          />
+          <ErrorMessage
+            name="note"
+            component="div"
+            className={css.error_message}
+          />
+        </label>
+        <label>
+          Income:
+          <Field
+            type="text"
+            name="income"
+            className={css.wide_input}
+          />
+          <ErrorMessage
+            name="income"
+            component="div"
+            className={css.error_message}
+          />
+        </label>
         <strong>Expenses</strong>
         <div className={css.expenses}>
-          <Field
-            type="text"
-            name="living"
-            placeholder="Living"
-          />
-          <Field
-            type="text"
-            name="meal"
-            placeholder="Meal"
-          />
-          <Field
-            type="text"
-            name="habits"
-            placeholder="Habits"
-          />
-          <Field
-            type="text"
-            name="road"
-            placeholder="Road"
-          />
-          <Field
-            type="text"
-            name="entertainment"
-            placeholder="Entertainment"
-          />
+          <label>
+            Living:
+            <Field
+              type="text"
+              name="living"
+            />
+            <ErrorMessage
+              name="living"
+              component="div"
+              className={css.error_message}
+            />
+          </label>
+          <label>
+            Food:
+            <Field
+              type="text"
+              name="food"
+            />
+            <ErrorMessage
+              name="food"
+              component="div"
+              className={css.error_message}
+            />
+          </label>
+          <label>
+            Habits:
+            <Field
+              type="text"
+              name="habits"
+            />
+            <ErrorMessage
+              name="habits"
+              component="div"
+              className={css.error_message}
+            />
+          </label>
+          <label>
+            Road:
+            <Field
+              type="text"
+              name="road"
+            />
+            <ErrorMessage
+              name="road"
+              component="div"
+              className={css.error_message}
+            />
+          </label>
+          <label className={css.entertainment}>
+            Entertainment:
+            <Field
+              type="text"
+              name="entertainment"
+            />
+            <ErrorMessage
+              name="entertainment"
+              component="div"
+              className={css.error_message}
+            />
+          </label>
         </div>
         <button type="submit">Add</button>
       </Form>

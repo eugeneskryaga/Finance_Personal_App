@@ -19,6 +19,7 @@ button {
   background-color: #0F2A1F;
   color: #A7F3D0;
   border: none;
+  transition: all 250ms ease;
 }
 
 h1, h2, h3, p {
@@ -28,4 +29,35 @@ h1, h2, h3, p {
 
 * {
   box-sizing: border-box;
+}
+
+button:hover {
+  box-shadow: 0 0 15px #A7F3D0;
+    transform: translateY(-2px);
+}
+
+input {
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+}
+
+input:focus {
+  border-color: #A7F3D0;
+  box-shadow: 0 0 10px #A7F3D0;
+  outline: none;
+}
+
+select {
+  background-color: #0F2A1F;
+  color: #A7F3D0;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+}
+
+select:focus {
+  outline: none;
+  border-color: #A7F3D0;
+  box-shadow: 0 0 12px rgba(167, 243, 208, 0.6);
+  transform: translateY(-2px);
 }

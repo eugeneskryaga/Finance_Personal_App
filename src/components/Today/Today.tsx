@@ -5,6 +5,7 @@ import { TransactionForm } from "../TransactionForm/TransactionForm";
 import { useState } from "react";
 import { Modal } from "../Modal/Modal";
 import { Notification } from "../Notification/Notification";
+import { getCurrentTransaction } from "../../utils/calculations";
 
 import css from "./Today.module.css";
 
@@ -20,11 +21,7 @@ export const Today = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const currentTransaction = transactions?.find(
-    transaction =>
-      new Date(transaction.date).toISOString().split("T")[0] ===
-      new Date().toISOString().split("T")[0],
-  );
+  const currentTransaction = getCurrentTransaction(transactions || []);
 
   let income = 0;
   let expenses = 0;

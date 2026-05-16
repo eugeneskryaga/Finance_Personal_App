@@ -6,14 +6,24 @@
     color: #A7F3D0;
 }
 
+.form label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .form input {
-    width: 200px;
+    width: 45px;
     height: 30px;
     border-radius: 8px;
     background-color: #0F2A1F;
     color: #A7F3D0;
     border: none;
     padding: 4px;
+}
+
+.form .wide_input{
+    width: 120px;
 }
 
 .form input::placeholder {
@@ -27,11 +37,11 @@
 .expenses {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-evenly;
     gap: 10px;
     padding: 0 20px 20px 20px;
 }
 
-.expenses input {
-    width: 100px;
+.error_message {
+    color: #F87171;
 }

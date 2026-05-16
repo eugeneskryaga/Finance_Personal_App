@@ -7,13 +7,28 @@ export const Navigation = () => {
     <nav>
       <ul className={css.ul}>
         <li>
-          <NavLink to="/">Dashboard</NavLink>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? css.activeLink : css.link)}
+          >
+            Dashboard
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/view">View</NavLink>
+          <NavLink
+            to="/view"
+            className={({ isActive }) => (isActive ? css.activeLink : css.link)}
+          >
+            View
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/stats">Statistics</NavLink>
+          <NavLink
+            to="/stats"
+            className={({ isActive }) => (isActive ? css.activeLink : css.link)}
+          >
+            Statistics
+          </NavLink>
         </li>
       </ul>
     </nav>

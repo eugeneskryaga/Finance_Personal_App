@@ -7,7 +7,28 @@
 }
 
 .ul a {
+    text-decoration: none;
+}
+
+.link {
     color: #A7F3D0;
     text-decoration: none;
-    padding: 20px 0 20px 0;
+    background-image: linear-gradient(#A7F3D0, #A7F3D0);
+    background-size: 0% 2px;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    transition: background-size 0.25s ease, color 0.2s ease;
+}
+
+.link:hover {
+    color: #ffffff;
+    background-size: 100% 2px;
+}
+
+.activeLink {
+    color: #ffffff;
+    background-size: 100% 2px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    font-weight: 600;
 }

@@ -1,6 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchTransactions } from "../../api/transactionsApi";
-import { calculateTotal } from "../../utils/calculations";
+import {
+  calculateTotal,
+  getCurrentMonth,
+  getCurrentMonthTransactions,
+  getPreviousMonth,
+  getPreviousMonthName,
+  getPreviousMonthTransactions,
+  getPreviousYear,
+} from "../../utils/calculations";
 
 import css from "./Statistics.module.css";
 import { StatisticsComparison } from "../StatisticsComparison/StatisticsComparison";
@@ -16,41 +24,26 @@ export const Statistics = () => {
     queryFn: fetchTransactions,
   });
 
-  const currentMonth = new Date().toLocaleString("en-US", {
-    month: "long",
-  });
-
   const currentDate = new Date();
 
-  const previousMonth =
-    currentDate.getMonth() === 0 ? 11 : currentDate.getMonth() - 1;
+  const currentMonth = getCurrentMonth(currentDate);
 
-  const previousYear =
-    currentDate.getMonth() === 0
-      ? currentDate.getFullYear() - 1
-      : currentDate.getFullYear();
+  const previousMonth = getPreviousMonth(currentDate);
 
-  const previousMonthName = new Date(
-    previousYear,
+  const previousYear = getPreviousYear(currentDate);
+
+  const previousMonthName = getPreviousMonthName(previousYear, previousMonth);
+
+  const currentMonthTransactions = getCurrentMonthTransactions(
+    transactions ?? [],
+    currentDate,
+  );
+
+  const previousMonthTransactions = getPreviousMonthTransactions(
+    transactions ?? [],
     previousMonth,
-  ).toLocaleString("en-US", { month: "long", year: "numeric" });
-
-  const currentMonthTransactions =
-    transactions?.filter(transaction => {
-      const date = new Date(transaction.date);
-      return (
-        date.getMonth() === currentDate.getMonth() &&
-        date.getFullYear() === currentDate.getFullYear()
-      );
-    }) || [];
-
-  const previousMonthTransactions =
-    transactions?.filter(transaction => {
-      const date = new Date(transaction.date);
-      return (
-        date.getMonth() === previousMonth && date.getFullYear() === previousYear
-      );
-    }) || [];
+    previousYear,
+  );
 
   const currentMonthTotal = calculateTotal(currentMonthTransactions);
 
@@ -77,7 +70,7 @@ export const Statistics = () => {
       <div>
         <h2>Expenses for {currentMonth}</h2>
         <p>Living: {currentMonthTotal.living}</p>
-        <p>Meal: {currentMonthTotal.meal}</p>
+        <p>Meal: {currentMonthTotal.food}</p>
         <p>Habits: {currentMonthTotal.habits}</p>
         <p>Road: {currentMonthTotal.road}</p>
         <p>Entertainment: {currentMonthTotal.entertainment}</p>

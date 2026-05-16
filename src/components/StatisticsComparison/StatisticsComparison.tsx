@@ -27,7 +27,7 @@ export const StatisticsComparison = ({
       </p>
       <strong>Expenses</strong>
       <p>Living: {currentMonthTotal.living - previousMonthTotal.living}</p>
-      <p>Meal: {currentMonthTotal.meal - previousMonthTotal.meal}</p>
+      <p>Meal: {currentMonthTotal.food - previousMonthTotal.food}</p>
       <p>Habits: {currentMonthTotal.habits - previousMonthTotal.habits}</p>
       <p>Road: {currentMonthTotal.road - previousMonthTotal.road}</p>
       <p>
