@@ -3,6 +3,7 @@ import { Layout } from "../Layout/Layout";
 import { DashboardPage } from "../../pages/DashboardPage";
 import { ViewPage } from "../../pages/ViewPage";
 import { StatsPage } from "../../pages/StatsPage";
+import { Notification } from "../Notification/Notification";
 
 export const App = () => {
   return (
@@ -23,6 +24,10 @@ export const App = () => {
           path="/stats"
           element={<StatsPage />}
         ></Route>
+        <Route
+          path="*"
+          element={<Notification message="Page not found" />}
+        />
       </Route>
     </Routes>
   );

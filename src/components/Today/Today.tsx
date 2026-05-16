@@ -9,7 +9,11 @@ import { Notification } from "../Notification/Notification";
 import css from "./Today.module.css";
 
 export const Today = () => {
-  const { data: transactions } = useQuery({
+  const {
+    data: transactions,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["allTransactions"],
     queryFn: fetchTransactions,
   });
@@ -35,6 +39,14 @@ export const Today = () => {
   const handleModalBtn = () => {
     setIsModalOpen(prev => !prev);
   };
+
+  if (isError) {
+    return <Notification message="Opps, it`s an error" />;
+  }
+
+  if (isLoading) {
+    return <Notification message="Loading..." />;
+  }
 
   return (
     <section className={css.container}>
