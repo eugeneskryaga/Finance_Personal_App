@@ -11,6 +11,7 @@ import type { Transaction } from "../../types/types";
 
 import css from "./TransactionForm.module.css";
 import { capitalize } from "../../utils/utils";
+import { useCallback } from "react";
 
 interface Props {
   id?: Transaction["id"];
@@ -21,7 +22,7 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
   const queryClient = useQueryClient();
 
   const { data: transaction } = useQuery({
-    queryKey: ["transaction"],
+    queryKey: ["transaction", id],
     queryFn: () => fetchTransactionById(id!),
     enabled: !!id,
   });
@@ -100,39 +101,39 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
     entertainment: transaction?.expenses?.entertainment?.toString() || "",
   };
 
-  const handleSubmit = (
-    values: FormValues,
-    formikHelpers: FormikHelpers<FormValues>,
-  ) => {
-    const totalExpenses =
-      Number(values.living) +
-      Number(values.food) +
-      Number(values.habits) +
-      Number(values.road) +
-      Number(values.entertainment);
+  const handleSubmit = useCallback(
+    (values: FormValues, formikHelpers: FormikHelpers<FormValues>) => {
+      const totalExpenses =
+        Number(values.living) +
+        Number(values.food) +
+        Number(values.habits) +
+        Number(values.road) +
+        Number(values.entertainment);
 
-    const transaction: Transaction = {
-      income: Number(values.income),
-      note: capitalize(values.note),
-      totalExpenses,
-      expenses: {
-        living: Number(values.living),
-        food: Number(values.food),
-        habits: Number(values.habits),
-        road: Number(values.road),
-        entertainment: Number(values.entertainment),
-      },
-      date: new Date().toISOString().split("T")[0],
-    };
+      const transaction: Transaction = {
+        income: Number(values.income),
+        note: capitalize(values.note.trim()),
+        totalExpenses,
+        expenses: {
+          living: Number(values.living),
+          food: Number(values.food),
+          habits: Number(values.habits),
+          road: Number(values.road),
+          entertainment: Number(values.entertainment),
+        },
+        date: new Date().toISOString().split("T")[0],
+      };
 
-    if (id) {
-      editMutation.mutate({ id, data: transaction });
-    } else {
-      addMutation.mutate(transaction);
-    }
-    formikHelpers.resetForm();
-    setIsModalOpen(prev => !prev);
-  };
+      if (id) {
+        editMutation.mutate({ id, data: transaction });
+      } else {
+        addMutation.mutate(transaction);
+      }
+      formikHelpers.resetForm();
+      setIsModalOpen(false);
+    },
+    [id],
+  );
 
   return (
     <Formik

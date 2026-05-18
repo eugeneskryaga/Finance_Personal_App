@@ -14,6 +14,7 @@ import {
 import css from "./Statistics.module.css";
 import { StatisticsComparison } from "../StatisticsComparison/StatisticsComparison";
 import { Notification } from "../Notification/Notification";
+import { useMemo } from "react";
 
 export const Statistics = () => {
   const {
@@ -35,23 +36,35 @@ export const Statistics = () => {
 
   const previousMonthName = getPreviousMonthName(previousYear, previousMonth);
 
-  const currentMonthTransactions = getCurrentMonthTransactions(
-    transactions ?? [],
-    currentDate,
+  const currentMonthTransactions = useMemo(
+    () => getCurrentMonthTransactions(transactions ?? [], currentDate),
+    [transactions],
   );
 
-  const previousMonthTransactions = getPreviousMonthTransactions(
-    transactions ?? [],
-    previousMonth,
-    previousYear,
+  const previousMonthTransactions = useMemo(
+    () =>
+      getPreviousMonthTransactions(
+        transactions ?? [],
+        previousMonth,
+        previousYear,
+      ),
+    [transactions],
   );
 
-  const currentMonthTotal = calculateTotal(currentMonthTransactions);
+  const currentMonthTotal = useMemo(
+    () => calculateTotal(currentMonthTransactions),
+    [currentMonthTransactions],
+  );
 
-  const previousMonthTotal = calculateTotal(previousMonthTransactions);
+  const previousMonthTotal = useMemo(
+    () => calculateTotal(previousMonthTransactions),
+    [previousMonthTransactions],
+  );
 
-  const { income, totalExpenses, ...currentMonthTotalFiltered } =
-    currentMonthTotal;
+  const currentMonthTotalFiltered = useMemo(() => {
+    const { income, totalExpenses, ...rest } = currentMonthTotal;
+    return rest;
+  }, [currentMonthTotal]);
 
   if (isError) {
     return <Notification message="Oops, it`s an error" />;

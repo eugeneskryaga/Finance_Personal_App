@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { memo, useCallback, useEffect, type ReactNode } from "react";
 import css from "./Modal.module.css";
 
 interface Props {
@@ -6,7 +6,7 @@ interface Props {
   onClose: () => void;
 }
 
-export const Modal = ({ children, onClose }: Props) => {
+export const Modal = memo(({ children, onClose }: Props) => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.code === "Escape") {
@@ -20,11 +20,14 @@ export const Modal = ({ children, onClose }: Props) => {
     };
   }, [onClose]);
 
-  const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) {
-      onClose();
-    }
-  };
+  const handleBackdropClick = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      if (event.target === event.currentTarget) {
+        onClose();
+      }
+    },
+    [onClose],
+  );
 
   return (
     <div
@@ -42,4 +45,4 @@ export const Modal = ({ children, onClose }: Props) => {
       </div>
     </div>
   );
-};
+});

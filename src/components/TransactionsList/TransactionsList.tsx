@@ -21,11 +21,7 @@ export const TransactionsList = () => {
 
   const [debouncedSearch] = useDebounce(search, 500);
 
-  const {
-    data: transactions,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: transactions, isLoading } = useQuery({
     queryKey: ["transactions", page, debouncedSearch, sort, order],
     queryFn: () =>
       fetchPaginatedTransactions(page, debouncedSearch, sort, order),
@@ -37,14 +33,6 @@ export const TransactionsList = () => {
     setIsModalOpen(true);
     setSelectedId(id);
   };
-
-  if (isError) {
-    return <Notification message="Opps, it`s an error" />;
-  }
-
-  if (isLoading) {
-    return <Notification message="Loading..." />;
-  }
 
   return (
     <>
@@ -107,6 +95,7 @@ export const TransactionsList = () => {
       ) : (
         <Notification message="There is no transactions yet" />
       )}
+      {isLoading && <Notification message="Oops, it's an error" />}
     </>
   );
 };

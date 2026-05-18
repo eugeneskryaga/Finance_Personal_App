@@ -23,22 +23,12 @@ export const Today = () => {
 
   const currentTransaction = getCurrentTransaction(transactions || []);
 
-  let income = 0;
-  let expenses = 0;
-  let balance = 0;
-
-  if (currentTransaction) {
-    income = currentTransaction.income;
-    expenses = currentTransaction.totalExpenses;
-    balance = income - expenses;
-  }
-
   const handleModalBtn = () => {
     setIsModalOpen(prev => !prev);
   };
 
   if (isError) {
-    return <Notification message="Opps, it`s an error" />;
+    return <Notification message="Oops, it`s an error" />;
   }
 
   if (isLoading) {
@@ -49,15 +39,18 @@ export const Today = () => {
     <section className={css.container}>
       {currentTransaction ? (
         <>
-          <h1 className={css.title}>BALANCE: {balance}</h1>
+          <h1 className={css.title}>
+            BALANCE:{" "}
+            {currentTransaction.income - currentTransaction.totalExpenses}
+          </h1>
           <strong className={css.note}>{currentTransaction?.note}</strong>
           <div className={css.innerContainer}>
             <div className={css.income}>
-              <p>{income}</p>
+              <p>{currentTransaction.income}</p>
               <strong>Income</strong>
             </div>
             <div className={css.expenses}>
-              <p>{expenses}</p>
+              <p>{currentTransaction.totalExpenses}</p>
               <strong>Expenses</strong>
             </div>
           </div>
