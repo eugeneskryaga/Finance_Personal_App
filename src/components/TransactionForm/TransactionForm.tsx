@@ -10,6 +10,7 @@ import type React from "react";
 import type { Transaction } from "../../types/types";
 
 import css from "./TransactionForm.module.css";
+import { capitalize } from "../../utils/calculations";
 
 interface Props {
   id?: Transaction["id"];
@@ -112,7 +113,7 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
 
     const transaction: Transaction = {
       income: Number(values.income),
-      note: values.note,
+      note: capitalize(values.note),
       totalExpenses,
       expenses: {
         living: Number(values.living),
@@ -123,6 +124,7 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
       },
       date: new Date().toISOString().split("T")[0],
     };
+
     if (id) {
       editMutation.mutate({ id, data: transaction });
     } else {

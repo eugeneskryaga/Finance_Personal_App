@@ -76,5 +76,7 @@ export const getPreviousMonthName = (
 ) =>
   new Date(previousYear, previousMonth).toLocaleString("en-US", {
     month: "long",
-    year: "numeric",
   });
+
+export const capitalize = (string: string) =>
+  string[0].toUpperCase() + string.slice(1).toLowerCase();

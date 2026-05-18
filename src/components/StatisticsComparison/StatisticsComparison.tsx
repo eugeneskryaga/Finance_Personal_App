@@ -11,28 +11,65 @@ export const StatisticsComparison = ({
   previousMonthTotal,
   previousMonthName,
 }: Props) => {
+  const difference: TransactionsTotal = {
+    income: currentMonthTotal.income - previousMonthTotal.income,
+    totalExpenses:
+      currentMonthTotal.totalExpenses - previousMonthTotal.totalExpenses,
+    entertainment:
+      currentMonthTotal.entertainment - previousMonthTotal.entertainment,
+    food: currentMonthTotal.food - previousMonthTotal.food,
+    road: currentMonthTotal.road - previousMonthTotal.road,
+    habits: currentMonthTotal.habits - previousMonthTotal.habits,
+    living: currentMonthTotal.living - previousMonthTotal.living,
+  };
+
   return (
     <div>
       <h2>Compared to {previousMonthName}</h2>
-      <p>Income: {currentMonthTotal.income - previousMonthTotal.income}</p>
+      <p>
+        Income:{" "}
+        <span>
+          {difference.income} {difference.income > 0 ? "⬆️" : "⬇️"}
+        </span>
+      </p>
       <p>
         Expenses:{" "}
-        {currentMonthTotal.totalExpenses - previousMonthTotal.totalExpenses}
-      </p>
-      <p>
-        Balance:{" "}
-        {currentMonthTotal.income -
-          currentMonthTotal.totalExpenses -
-          (previousMonthTotal.income - previousMonthTotal.totalExpenses)}
+        <span>
+          {difference.totalExpenses}{" "}
+          {difference.totalExpenses > 0 ? "⬆️" : "⬇️"}
+        </span>
       </p>
       <strong>Expenses</strong>
-      <p>Living: {currentMonthTotal.living - previousMonthTotal.living}</p>
-      <p>Meal: {currentMonthTotal.food - previousMonthTotal.food}</p>
-      <p>Habits: {currentMonthTotal.habits - previousMonthTotal.habits}</p>
-      <p>Road: {currentMonthTotal.road - previousMonthTotal.road}</p>
+      <p>
+        Living:{" "}
+        <span>
+          {difference.living} {difference.living > 0 ? "⬆️" : "⬇️"}
+        </span>
+      </p>
+      <p>
+        Food:{" "}
+        <span>
+          {difference.food} {difference.food > 0 ? "⬆️" : "⬇️"}
+        </span>
+      </p>
+      <p>
+        Habits:{" "}
+        <span>
+          {difference.habits} {difference.habits > 0 ? "⬆️" : "⬇️"}
+        </span>
+      </p>
+      <p>
+        Road:{" "}
+        <span>
+          {difference.road} {difference.road > 0 ? "⬆️" : "⬇️"}
+        </span>
+      </p>
       <p>
         Entertainment:{" "}
-        {currentMonthTotal.entertainment - previousMonthTotal.entertainment}
+        <span>
+          {difference.entertainment}{" "}
+          {difference.entertainment > 0 ? "⬆️" : "⬇️"}
+        </span>
       </p>
     </div>
   );

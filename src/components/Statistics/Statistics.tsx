@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchTransactions } from "../../api/transactionsApi";
 import {
   calculateTotal,
+  capitalize,
   getCurrentMonth,
   getCurrentMonthTransactions,
   getPreviousMonth,
@@ -49,8 +50,11 @@ export const Statistics = () => {
 
   const previousMonthTotal = calculateTotal(previousMonthTransactions);
 
+  const { income, totalExpenses, ...currentMonthTotalFiltered } =
+    currentMonthTotal;
+
   if (isError) {
-    return <Notification message="Opps, it`s an error" />;
+    return <Notification message="Oops, it`s an error" />;
   }
 
   if (isLoading) {
@@ -61,20 +65,38 @@ export const Statistics = () => {
     <section className={css.container}>
       <div>
         <h1>Total for {currentMonth}</h1>
-        <p>Total income: {currentMonthTotal.income}</p>
-        <p>Total expenses: {currentMonthTotal.totalExpenses}</p>
         <p>
-          Balance: {currentMonthTotal.income - currentMonthTotal.totalExpenses}
+          Total income: <span>{currentMonthTotal.income}</span>
+        </p>
+        <p>
+          Total expenses: <span>{currentMonthTotal.totalExpenses}</span>
+        </p>
+        <p>
+          Balance:{" "}
+          <span>
+            {currentMonthTotal.income - currentMonthTotal.totalExpenses}
+          </span>
         </p>
       </div>
       <div>
         <h2>Expenses for {currentMonth}</h2>
-        <p>Living: {currentMonthTotal.living}</p>
-        <p>Meal: {currentMonthTotal.food}</p>
-        <p>Habits: {currentMonthTotal.habits}</p>
-        <p>Road: {currentMonthTotal.road}</p>
-        <p>Entertainment: {currentMonthTotal.entertainment}</p>
+        {Object.entries(currentMonthTotalFiltered)
+          .sort(([, a], [, b]) => b - a)
+          .map(expense => (
+            <label key={expense[0]}>
+              {capitalize(expense[0])}:
+              <progress
+                max={currentMonthTotal.totalExpenses}
+                value={expense[1]}
+                className={css.progressBar}
+              >
+                {expense[1]}
+              </progress>
+              {expense[1]}
+            </label>
+          ))}
       </div>
+
       {previousMonthTotal ? (
         <StatisticsComparison
           currentMonthTotal={currentMonthTotal}
@@ -82,7 +104,7 @@ export const Statistics = () => {
           previousMonthName={previousMonthName}
         />
       ) : (
-        <Notification message={`No trasactions for ${previousMonthName}`} />
+        <Notification message={`No transactions for ${previousMonthName}`} />
       )}
     </section>
   ) : (
