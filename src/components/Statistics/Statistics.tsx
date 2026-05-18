@@ -9,7 +9,7 @@ import {
   getPreviousMonthName,
   getPreviousMonthTransactions,
   getPreviousYear,
-} from "../../utils/calculations";
+} from "../../utils/utils";
 
 import css from "./Statistics.module.css";
 import { StatisticsComparison } from "../StatisticsComparison/StatisticsComparison";

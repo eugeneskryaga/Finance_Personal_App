@@ -10,7 +10,7 @@ import type React from "react";
 import type { Transaction } from "../../types/types";
 
 import css from "./TransactionForm.module.css";
-import { capitalize } from "../../utils/calculations";
+import { capitalize } from "../../utils/utils";
 
 interface Props {
   id?: Transaction["id"];

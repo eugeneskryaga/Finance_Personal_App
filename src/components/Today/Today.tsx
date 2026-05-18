@@ -5,7 +5,7 @@ import { TransactionForm } from "../TransactionForm/TransactionForm";
 import { useState } from "react";
 import { Modal } from "../Modal/Modal";
 import { Notification } from "../Notification/Notification";
-import { getCurrentTransaction } from "../../utils/calculations";
+import { getCurrentTransaction } from "../../utils/utils";
 
 import css from "./Today.module.css";
 
