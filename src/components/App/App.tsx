@@ -15,15 +15,15 @@ export const App = () => {
         <Route
           index
           element={<DashboardPage />}
-        ></Route>
+        />
         <Route
           path="/view"
           element={<ViewPage />}
-        ></Route>
+        />
         <Route
           path="/stats"
           element={<StatsPage />}
-        ></Route>
+        />
         <Route
           path="*"
           element={<Notification message="Page not found" />}
