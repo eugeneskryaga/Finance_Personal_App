@@ -110,7 +110,7 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
         Number(values.road) +
         Number(values.entertainment);
 
-      const transaction: Transaction = {
+      const newTransaction: Transaction = {
         income: Number(values.income),
         note: capitalize(values.note.trim()),
         totalExpenses,
@@ -121,13 +121,13 @@ export const TransactionForm = ({ id, setIsModalOpen }: Props) => {
           road: Number(values.road),
           entertainment: Number(values.entertainment),
         },
-        date: new Date().toISOString().split("T")[0],
+        date: transaction?.date || new Date().toISOString().split("T")[0],
       };
 
       if (id) {
-        editMutation.mutate({ id, data: transaction });
+        editMutation.mutate({ id, data: newTransaction });
       } else {
-        addMutation.mutate(transaction);
+        addMutation.mutate(newTransaction);
       }
       formikHelpers.resetForm();
       setIsModalOpen(false);
