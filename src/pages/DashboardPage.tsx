@@ -1,5 +1,5 @@
-import { Today } from "../components/Today/Today";
+import { Dashboard } from "../components/Dashboard/Dashboard";
 
 export const DashboardPage = () => {
-  return <Today />;
+  return <Dashboard />;
 };

@@ -1,4 +1,3 @@
 export const Header = () => {
-  const currentDate = new Date().toDateString();
-  return <p>{currentDate}</p>;
+  return <h2>Header</h2>;
 };

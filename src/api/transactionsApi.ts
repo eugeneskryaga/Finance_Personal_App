@@ -1,46 +1,16 @@
 import axios from "axios";
-import type { Order, Transaction } from "../types/types";
+import type { QueryParams, Transaction } from "../types/types";
 
-const BASE_URL = "https://69ed1d12af4ff533142ba1f8.mockapi.io/api";
+const BASE_URL = "https://finance-app-server-gt1n.onrender.com";
 
 const api = axios.create({
   baseURL: BASE_URL,
 });
 
-export const fetchTransactions = async () => {
-  return (await api.get<Transaction[]>("/income")).data;
-};
+export const getTransactions = async (params: QueryParams) => {
+  const { data } = await api.get<Transaction[]>("/transactions", {
+    params,
+  });
 
-export const fetchTransactionById = async (id: Transaction["id"]) => {
-  return (await api.get<Transaction>(`/income/${id}`)).data;
-};
-
-export const fetchPaginatedTransactions = async (
-  page: number,
-  date?: Transaction["date"],
-  sortBy: string = "date",
-  order: Order = "desc",
-) => {
-  return (
-    await api.get<Transaction[]>("/income", {
-      params: {
-        page,
-        limit: 3,
-        sortBy,
-        order,
-        ...(date && { date }),
-      },
-    })
-  ).data;
-};
-
-export const addTransaction = async (newTransaction: Transaction) => {
-  return (await api.post<Transaction>("/income", newTransaction)).data;
-};
-
-export const editTransaction = async (
-  id: Transaction["id"],
-  newTransaction: Transaction,
-) => {
-  return (await api.put<Transaction>(`/income/${id}`, newTransaction)).data;
+  return data;
 };
