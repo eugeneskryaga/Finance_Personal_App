@@ -1,17 +1,37 @@
 import { NavLink } from "react-router";
 
+import css from "./Navigation.module.css";
+
 export const Navigation = () => {
+  const getLinkClass = ({ isActive }: { isActive: boolean }) =>
+    isActive ? `${css.link} ${css.active}` : css.link;
+
   return (
     <nav>
-      <ul>
+      <ul className={css.nav_list}>
         <li>
-          <NavLink to="/">Dashboard</NavLink>
+          <NavLink
+            to="/"
+            className={getLinkClass}
+          >
+            Dashboard
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/view">View</NavLink>
+          <NavLink
+            to="/view"
+            className={getLinkClass}
+          >
+            View
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/stats">Statistics</NavLink>
+          <NavLink
+            to="/stats"
+            className={getLinkClass}
+          >
+            Statistics
+          </NavLink>
         </li>
       </ul>
     </nav>

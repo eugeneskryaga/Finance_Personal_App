@@ -1,5 +1,9 @@
 import axios from "axios";
-import type { QueryParams, Transaction } from "../types/types";
+import type {
+  QueryParams,
+  Transaction,
+  TransactionResponse,
+} from "../types/types";
 
 const BASE_URL = "https://finance-app-server-gt1n.onrender.com";
 
@@ -8,9 +12,14 @@ const api = axios.create({
 });
 
 export const getTransactions = async (params: QueryParams) => {
-  const { data } = await api.get<Transaction[]>("/transactions", {
+  const { data } = await api.get<TransactionResponse>("/transactions", {
     params,
   });
 
+  return data;
+};
+
+export const postTransaction = async (transaction: Transaction) => {
+  const { data } = await api.post("/transactions", transaction);
   return data;
 };

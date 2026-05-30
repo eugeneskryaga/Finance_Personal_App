@@ -1,5 +1,3 @@
-type TransactionType = "income" | "expense";
-
 type TransactionCategories =
   | "living"
   | "food"
@@ -17,14 +15,14 @@ type TransactionCategories =
 type Order = "asc" | "desc";
 
 export interface Transaction {
-  id?: string;
-  type: TransactionType;
+  _id?: string;
+  type: string;
   category: TransactionCategories;
   amount: number;
   note?: string;
-  date: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  date: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface QueryParams {
@@ -35,4 +33,11 @@ export interface QueryParams {
   search?: string;
   startDate?: Date;
   endDate?: Date;
+}
+
+export interface TransactionResponse {
+  transactions: Transaction[];
+  isNextPageExists: boolean;
+  totalPage: number;
+  totalTransactions: number;
 }

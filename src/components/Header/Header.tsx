@@ -1,3 +1,8 @@
 export const Header = () => {
-  return <h2>Header</h2>;
+  const currentDate = new Date().toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+  return <strong>{currentDate}</strong>;
 };
