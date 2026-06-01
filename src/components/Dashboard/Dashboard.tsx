@@ -12,15 +12,13 @@ import { Modal } from "../Modal/Modal";
 
 export const Dashboard = () => {
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [debouncedSearch] = useDebounce(search, 500);
 
   const { data: response } = useQuery({
-    queryKey: ["transactions", page, debouncedSearch],
-    queryFn: () =>
-      getTransactions({ page, perPage: 5, search: debouncedSearch }),
+    queryKey: ["transactions", debouncedSearch],
+    queryFn: () => getTransactions({ perPage: 5, search: debouncedSearch }),
     retry: 1,
   });
 
