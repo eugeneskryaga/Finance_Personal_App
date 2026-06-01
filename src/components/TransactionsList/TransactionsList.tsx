@@ -1,6 +1,9 @@
 import type { Transaction } from "../../types/types";
 import { capitalize, formatDate, getDateTime } from "../../utils/utils";
 import { MdTrendingUp, MdTrendingDown } from "react-icons/md";
+import { useState } from "react";
+import { Modal } from "../Modal/Modal";
+import { TransactionInfo } from "../TransactionInfo/TransactionInfo";
 
 import css from "./TransactionsList.module.css";
 
@@ -9,20 +12,24 @@ interface Props {
 }
 
 export const TransactionsList = ({ transactions }: Props) => {
+  const [selectedTransaction, setSelectedTransaction] =
+    useState<Transaction | null>(null);
+
   const groupedTransactions = transactions.reduce(
     (acc, transaction) => {
       const date = new Date(transaction.date!).toISOString().split("T")[0];
-
       if (!acc[date]) {
         acc[date] = [];
       }
-
       acc[date].push(transaction);
-
       return acc;
     },
     {} as Record<string, Transaction[]>,
   );
+
+  const onModalClose = () => {
+    setSelectedTransaction(null);
+  };
 
   return (
     <>
@@ -34,6 +41,7 @@ export const TransactionsList = ({ transactions }: Props) => {
               <li
                 key={transaction._id}
                 className={css.li}
+                onClick={() => setSelectedTransaction(transaction)}
               >
                 <p>
                   {transaction.type === "income" ? (
@@ -62,6 +70,14 @@ export const TransactionsList = ({ transactions }: Props) => {
           </ul>
         </div>
       ))}
+      {selectedTransaction && (
+        <Modal onClose={onModalClose}>
+          <TransactionInfo
+            transaction={selectedTransaction}
+            onModalClose={onModalClose}
+          />
+        </Modal>
+      )}
     </>
   );
 };

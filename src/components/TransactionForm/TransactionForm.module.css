@@ -46,6 +46,7 @@
 
 .category {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
 }
@@ -79,6 +80,7 @@ select {
 
 .error {
   width: 100%;
+  max-width: 214px;
   padding: 10px;
   background: #2a2d35;
   color: #F87171;

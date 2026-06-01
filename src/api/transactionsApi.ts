@@ -1,5 +1,7 @@
 import axios from "axios";
 import type {
+  CreateTransaction,
+  PatchTransaction,
   QueryParams,
   Transaction,
   TransactionResponse,
@@ -19,15 +21,20 @@ export const getTransactions = async (params: QueryParams) => {
   return data;
 };
 
-export const postTransaction = async (transaction: Transaction) => {
+export const postTransaction = async (transaction: CreateTransaction) => {
   const { data } = await api.post("/transactions", transaction);
   return data;
 };
 
 export const patchTransaction = async (
   id: Transaction["_id"],
-  newTransaction: Transaction,
+  newTransaction: PatchTransaction,
 ) => {
-  const { data } = await api.patch(`/transactions/:${id}`, newTransaction);
+  const { data } = await api.patch(`/transactions/${id}`, newTransaction);
+  return data;
+};
+
+export const deleteTransaction = async (id: Transaction["_id"]) => {
+  const { data } = await api.delete(`/transactions/${id}`);
   return data;
 };

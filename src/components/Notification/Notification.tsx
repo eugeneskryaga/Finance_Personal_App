@@ -1,10 +1,12 @@
+import css from "./Notofocation.module.css";
+
 interface Props {
   message: string;
 }
 
 export const Notification = ({ message }: Props) => {
   return (
-    <div>
+    <div className={css.notification}>
       <p>{message}</p>
     </div>
   );

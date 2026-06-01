@@ -1,29 +1,56 @@
-type Order = "asc" | "desc";
+export type SortOrder = "asc" | "desc";
+
+export type SortField = "date" | "amount" | "type" | "category";
+
+export type Type = "income" | "expense";
 
 export interface Transaction {
-  _id?: string;
-  type: "income" | "expense";
+  _id: string;
+  type: Type;
   category: string;
   amount: number;
   note?: string;
+  date: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TransactionFormValues {
+  type: Type;
+  category: string;
+  amount: string;
+  note: string;
+}
+
+export interface CreateTransaction {
+  type: Type;
+  category: string;
+  amount: number;
+  note?: string;
+  date: string;
+}
+
+export interface PatchTransaction {
+  type?: Type;
+  category?: string;
+  amount?: number;
+  note?: string;
   date?: string;
-  createdAt?: string;
-  updatedAt?: string;
 }
 
 export interface QueryParams {
   page?: number;
   perPage?: number;
-  sortBy?: string;
-  sortOrder?: Order;
+  sortBy?: SortField;
+  sortOrder?: SortOrder;
   search?: string;
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: string;
+  endDate?: string;
 }
 
 export interface TransactionResponse {
   transactions: Transaction[];
   isNextPageExists: boolean;
-  totalPage: number;
+  totalPages: number;
   totalTransactions: number;
 }

@@ -1,4 +1,4 @@
-import type { Transaction } from "../../types/types";
+import type { Transaction, TransactionFormValues } from "../../types/types";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Yup from "yup";
@@ -18,40 +18,36 @@ interface Props {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-interface FormValues {
-  type: "income" | "expense";
-  category: string;
-  amount: number;
-  note: string;
-}
-
 const validationSchema = Yup.object({
   type: Yup.string().required("Required"),
   category: Yup.string().when("type", {
     is: "income",
     then: schema => schema.oneOf(INCOME_CATEGORIES).required(),
-
     otherwise: schema => schema.oneOf(EXPENSE_CATEGORIES).required(),
   }),
-  amount: Yup.number().positive("Value must be positive").required("Required"),
+  amount: Yup.number()
+    .typeError("Value must be a number")
+    .positive("Value must be positive")
+    .required("Required"),
   note: Yup.string().max(100, "Note can have maximum 100 characters"),
 });
 
 export const TransactionForm = ({ transaction, setIsModalOpen }: Props) => {
   const queryClient = useQueryClient();
 
-  const initialValues: FormValues = {
+  const initialValues: TransactionFormValues = {
     type: transaction?.type ?? "expense",
     category: transaction?.category ?? CATEGORIES.expenses[0],
-    amount: transaction?.amount ?? 0,
+    amount: transaction?.amount.toString() ?? "",
     note: transaction?.note ?? "",
   };
 
   const mutation = useMutation({
-    mutationFn: async (values: FormValues) => {
+    mutationFn: async (values: TransactionFormValues) => {
       const payload = {
         ...values,
-        note: values.note.trim() || undefined,
+        amount: Number(values.amount),
+        note: capitalize(values.note.trim()) || undefined,
       };
 
       if (transaction?._id) {
@@ -134,6 +130,7 @@ export const TransactionForm = ({ transaction, setIsModalOpen }: Props) => {
               <Field
                 type="text"
                 name="amount"
+                placeholder="Amount"
               />
               <ErrorMessage
                 name="amount"

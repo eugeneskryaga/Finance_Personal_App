@@ -1,9 +1,10 @@
 body {
   background-color: #1E1E1E;
   font-family: "Manrope", sans-serif;
+  min-width: 414px;
   display: flex;
   justify-content: center;
-  min-width: 410px;
+  padding: 0 10px;
   color: whitesmoke;
 }
 
@@ -22,6 +23,10 @@ body, ul, h1, h2, h3, p {
 
 * {
   box-sizing: border-box;
+}
+
+textarea {
+  resize: none;
 }
 
 input, select, textarea {
