@@ -1,13 +1,19 @@
+.app {
+  max-width: 410px;
+  width: 280px;
+  margin: 0 auto;
+}
+
 .header {
-    display: block;
-    text-align: center;
-    padding: 0 20px 0 20px;
-    background-color: #363636;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 8px;
+  display: block;
+  text-align: center;
+  padding: 0 20px 0 20px;
+  background-color: #363636;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
 }
 
 .main {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }

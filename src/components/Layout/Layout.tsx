@@ -6,7 +6,7 @@ import css from "./Layout.module.css";
 
 export const Layout = () => {
   return (
-    <>
+    <div className={css.app}>
       <header className={css.header}>
         <Header />
       </header>
@@ -16,6 +16,6 @@ export const Layout = () => {
       <footer>
         <Navigation />
       </footer>
-    </>
+    </div>
   );
 };
