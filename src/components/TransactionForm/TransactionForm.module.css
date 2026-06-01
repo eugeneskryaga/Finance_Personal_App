@@ -1,0 +1,96 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.type {
+  display: flex;
+  gap: 24px;
+}
+
+.type input {
+  display: none;
+}
+
+.type label {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+  border: 1px solid #3a3d46;
+  border-radius: 12px;
+  background: #2a2d35;
+  color: #9ca3af;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.activeIncome {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: #22c55e;
+  color: #22c55e;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.2);
+}
+
+.activeExpense {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #ef4444;
+  color: #ef4444;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.2);
+}
+
+.category {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.category input {
+  width: 80px;
+}
+
+.category input,
+select {
+  border: 1px solid #3a3d46;
+  border-radius: 12px;
+  background: #2a2d35;
+  color: #9ca3af;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 6px;
+}
+
+.textArea textarea {
+  width: 220px;
+  height: 80px;
+  border: 1px solid #3a3d46;
+  border-radius: 12px;
+  background: #2a2d35;
+  color: #9ca3af;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 4px;
+}
+
+.error {
+  width: 100%;
+  padding: 10px;
+  background: #2a2d35;
+  color: #F87171;
+  border-radius: 10px;
+}
+
+.buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.close {
+  opacity: 0.7;
+}

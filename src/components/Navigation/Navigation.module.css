@@ -9,8 +9,10 @@
 
 .link {
     color: whitesmoke;
+    text-decoration: none;
 }
 
 .active {
-    color: lightgreen;
+    color: #22C55E;
+    text-decoration: underline;
 }

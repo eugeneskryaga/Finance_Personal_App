@@ -23,3 +23,11 @@ export const postTransaction = async (transaction: Transaction) => {
   const { data } = await api.post("/transactions", transaction);
   return data;
 };
+
+export const patchTransaction = async (
+  id: Transaction["_id"],
+  newTransaction: Transaction,
+) => {
+  const { data } = await api.patch(`/transactions/:${id}`, newTransaction);
+  return data;
+};

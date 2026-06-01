@@ -11,7 +11,7 @@ interface Props {
 export const TransactionsList = ({ transactions }: Props) => {
   const groupedTransactions = transactions.reduce(
     (acc, transaction) => {
-      const date = new Date(transaction.date).toISOString().split("T")[0];
+      const date = new Date(transaction.date!).toISOString().split("T")[0];
 
       if (!acc[date]) {
         acc[date] = [];
@@ -44,9 +44,9 @@ export const TransactionsList = ({ transactions }: Props) => {
                 </p>
                 <div>
                   <p>{capitalize(transaction.category)}</p>
-                  <p>{getDateTime(transaction.date)}</p>
+                  <p>{getDateTime(transaction.date!)}</p>
                 </div>
-                <p>
+                <p className={css.amount}>
                   {transaction.type === "income" ? (
                     <span className={`${css.span} ${css.span_income}`}>
                       + {transaction.amount}

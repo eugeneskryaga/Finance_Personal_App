@@ -5,12 +5,13 @@
 
 .li {
     display: flex;
-    justify-content: space-between;
+    gap: 20px;
     align-items: center;
     background-color: #363636;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 .icon {
@@ -34,14 +35,14 @@
     color: #F87171;
 }
 
-.span {
-    margin-right: 5px;
-}
-
 .span_income {
     color: #22C55E;
 }
 
 .span_expense {
-        color: #F87171;
+    color: #F87171;
+}
+
+.amount {
+    margin-left: auto;
 }

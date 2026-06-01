@@ -1,31 +1,32 @@
-import { useQuery, type QueryFunctionContext } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getTransactions } from "../../api/transactionsApi";
 import { useState } from "react";
 import { TransactionsList } from "../TransactionsList/TransactionsList";
 import { TransactionsListControls } from "../TransactionsListControls/TransactionsListControls";
 import { useDebounce } from "use-debounce";
-import type { QueryParams } from "../../types/types";
+import { MdAdd } from "react-icons/md";
+
+import css from "./Dashboard.module.css";
+import { TransactionForm } from "../TransactionForm/TransactionForm";
+import { Modal } from "../Modal/Modal";
 
 export const Dashboard = () => {
-  const [params, setParams] = useState<QueryParams>({ perPage: 20 });
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [debouncedSearch] = useDebounce(search, 500);
 
   const { data: response } = useQuery({
-    queryKey: [
-      "transactions",
-      {
-        search: debouncedSearch,
-        perPage: 20,
-      },
-    ],
-    queryFn: ({ queryKey }: QueryFunctionContext<[string, QueryParams]>) => {
-      const [, params] = queryKey;
-      return getTransactions(params);
-    },
+    queryKey: ["transactions", page, debouncedSearch],
+    queryFn: () =>
+      getTransactions({ page, perPage: 5, search: debouncedSearch }),
     retry: 1,
   });
+
+  const handleModalBtn = () => {
+    setIsModalOpen(prev => !prev);
+  };
 
   const transactions = response?.transactions ?? [];
 
@@ -37,6 +38,17 @@ export const Dashboard = () => {
       />
       {transactions.length > 0 && (
         <TransactionsList transactions={transactions} />
+      )}
+      <button
+        className={css.modal_btn}
+        onClick={handleModalBtn}
+      >
+        <MdAdd className={css.icon} />
+      </button>
+      {isModalOpen && (
+        <Modal onClose={handleModalBtn}>
+          <TransactionForm setIsModalOpen={setIsModalOpen} />
+        </Modal>
       )}
     </div>
   );

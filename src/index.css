@@ -24,14 +24,25 @@ body, ul, h1, h2, h3, p {
   box-sizing: border-box;
 }
 
-input {
+input, select, textarea {
   border: none;
   outline: none;
   font-size: 16px;
-  padding: 10px;
 }
 
-input:focus {
+input:focus, select:focus, textarea:focus {
   border: 1px solid #22C55E;
   box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+}
+
+button {
+  background: #363636;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  width: 80px;
+  height: 30px;
+  color:#22C55E;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
