@@ -8,7 +8,7 @@
 
 .type {
   display: flex;
-  gap: 24px;
+  gap: 40px;
 }
 
 .type input {
@@ -23,11 +23,11 @@
   padding: 12px 20px;
   border: 1px solid #3a3d46;
   border-radius: 12px;
-  background: #2a2d35;
+  background: #363636;
   color: #9ca3af;
   font-size: 14px;
-  font-weight: 600;
   cursor: pointer;
+  width: 100px;
 }
 
 .activeIncome {
@@ -48,34 +48,41 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 20px;
 }
 
-.category input {
-  width: 80px;
+.category input::placeholder {
+  font-size: 14px;
+  font-weight: normal;
 }
 
 .category input,
 select {
   border: 1px solid #3a3d46;
   border-radius: 12px;
-  background: #2a2d35;
+  background: #363636;
   color: #9ca3af;
   font-size: 14px;
   font-weight: 600;
-  padding: 10px 6px;
+  padding: 6px;
+  width: 130px;
 }
 
 .textArea textarea {
-  width: 220px;
+  width: 280px;
   height: 80px;
   border: 1px solid #3a3d46;
   border-radius: 12px;
-  background: #2a2d35;
+  background: #363636;
   color: #9ca3af;
   font-size: 14px;
   font-weight: 600;
   padding: 10px 4px;
+}
+
+.textArea textarea::placeholder {
+  padding-left: 10px;
+  color: grey;
 }
 
 .error {

@@ -1,7 +1,7 @@
 .date {
     display: block;
     margin-bottom: 10px;
-    margin-left: 10%;
+    margin-left: 24px;
 }
 
 .li {
@@ -15,7 +15,7 @@
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
     transition: scale 250ms ease;
     cursor: pointer;
-    width: 70%;
+    width: 90%;
 }
 
 .li:hover {
@@ -52,4 +52,20 @@
 
 .amount {
     margin-left: auto;
+}
+
+.scrollWrapper {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.sentinel {
+    height: 1px;
+}
+
+.loadingMore {
+    margin: 10px auto;
+    width: fit-content;
+    color: #ffffff;
 }

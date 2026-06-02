@@ -46,7 +46,7 @@ input:focus, select:focus, textarea:focus {
 
 button {
   background: #363636;
-  border: none;
+  border: 1px solid #22C55E;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 600;

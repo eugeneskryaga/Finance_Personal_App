@@ -13,7 +13,7 @@ export const Layout = () => {
       <main className={css.main}>
         <Outlet />
       </main>
-      <footer>
+      <footer className={css.footer}>
         <Navigation />
       </footer>
     </div>
