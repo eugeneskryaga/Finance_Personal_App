@@ -5,15 +5,14 @@ import { TransactionsList } from "../TransactionsList/TransactionsList";
 import { TransactionsListControls } from "../TransactionsListControls/TransactionsListControls";
 import { useDebounce } from "use-debounce";
 import { MdAdd } from "react-icons/md";
-
-import css from "./Dashboard.module.css";
 import { TransactionForm } from "../TransactionForm/TransactionForm";
 import { Modal } from "../Modal/Modal";
+
+import css from "./Dashboard.module.css";
 
 export const Dashboard = () => {
   const [search, setSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [debouncedSearch] = useDebounce(search, 500);
 
   const { data: response } = useQuery({
@@ -29,7 +28,7 @@ export const Dashboard = () => {
   const transactions = response?.transactions ?? [];
 
   return (
-    <div>
+    <div className={css.container}>
       <TransactionsListControls
         search={search}
         setSearch={setSearch}

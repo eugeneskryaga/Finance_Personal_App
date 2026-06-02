@@ -2,16 +2,15 @@ import type { Transaction, TransactionFormValues } from "../../types/types";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Yup from "yup";
-
 import { postTransaction, patchTransaction } from "../../api/transactionsApi";
 import {
   CATEGORIES,
   EXPENSE_CATEGORIES,
   INCOME_CATEGORIES,
 } from "../constants/constants";
+import { capitalize } from "../../utils/utils";
 
 import css from "./TransactionForm.module.css";
-import { capitalize } from "../../utils/utils";
 
 interface Props {
   transaction?: Transaction;

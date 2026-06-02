@@ -1,16 +1,23 @@
+.container {
+  position: relative;
+  height: 100%;
+}
+
 .modal_btn {
-  width: 48px;
-  height: 48px;
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   border: none;
-  margin-left: auto;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
 }
 
 .icon {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   color: #22C55E;
 }

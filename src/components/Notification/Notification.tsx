@@ -1,4 +1,4 @@
-import css from "./Notofocation.module.css";
+import css from "./Notification.module.css";
 
 interface Props {
   message: string;

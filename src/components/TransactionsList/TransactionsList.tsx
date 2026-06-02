@@ -36,7 +36,7 @@ export const TransactionsList = ({ transactions }: Props) => {
       {Object.entries(groupedTransactions).map(([date, transactions]) => (
         <div key={date}>
           <strong className={css.date}>{formatDate(date)}</strong>
-          <ul>
+          <ul className={css.list}>
             {transactions.map(transaction => (
               <li
                 key={transaction._id}

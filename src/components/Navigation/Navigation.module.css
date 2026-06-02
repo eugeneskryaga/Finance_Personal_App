@@ -3,8 +3,8 @@
     justify-content: space-between;
     gap: 20px;
     background-color: #363636;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
 }
 
 .link {

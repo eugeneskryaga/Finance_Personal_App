@@ -1,3 +1,5 @@
+import { MdSearch } from "react-icons/md";
+
 import css from "./TransactionsListControls.module.css";
 
 interface Props {
@@ -7,7 +9,8 @@ interface Props {
 
 export const TransactionsListControls = ({ search, setSearch }: Props) => {
   return (
-    <div>
+    <div className={css.container}>
+      <MdSearch className={css.icon} />
       <input
         type="text"
         placeholder="Search..."
@@ -17,16 +20,6 @@ export const TransactionsListControls = ({ search, setSearch }: Props) => {
         }}
         className={css.search}
       />
-      {/* <div>
-        <select name="sort">
-          <option value="type">By type</option>
-          <option value="category">By category</option>
-        </select>
-        <select name="order">
-          <option value="asc">From A to Z</option>
-          <option value="desc">From Z to A</option>
-        </select>
-      </div> */}
     </div>
   );
 };

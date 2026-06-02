@@ -1,9 +1,15 @@
+#root {
+  display: flex;
+  justify-content: center;
+}
+
 body {
   background-color: #1E1E1E;
   font-family: "Manrope", sans-serif;
   padding: 0 10px;
   color: whitesmoke;
   overflow: hidden;
+  font-weight: bold;
 }
 
 ul {
@@ -44,8 +50,13 @@ button {
   border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
-  width: 80px;
-  height: 30px;
+  width: 90px;
+  height: 40px;
   color:#22C55E;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  transition: scale 250ms ease;
+}
+
+button:hover {
+  scale: 1.1;
 }

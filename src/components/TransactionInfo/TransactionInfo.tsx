@@ -3,11 +3,11 @@ import { capitalize, formatDate, getDateTime } from "../../utils/utils";
 import { Notification } from "../Notification/Notification";
 import { MdTrendingUp, MdTrendingDown } from "react-icons/md";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-import css from "./TransactionInfo.module.css";
 import { deleteTransaction } from "../../api/transactionsApi";
 import { useState } from "react";
 import { TransactionForm } from "../TransactionForm/TransactionForm";
+
+import css from "./TransactionInfo.module.css";
 
 interface Props {
   transaction: Transaction;
@@ -61,13 +61,13 @@ export const TransactionInfo = ({ transaction, onModalClose }: Props) => {
             )}
           </p>
         </div>
-        <div className={css.note}>
-          {transaction.note ? (
+        {transaction.note ? (
+          <div className={css.note}>
             <p>Note : {transaction.note}</p>
-          ) : (
-            <Notification message="There is no note for this transaction" />
-          )}
-        </div>
+          </div>
+        ) : (
+          <Notification message="There is no note for this transaction" />
+        )}
         <div className={css.buttons}>
           <button onClick={handleEdit}>Edit</button>
           <button onClick={() => handleDelete(transaction._id)}>Delete</button>
