@@ -1,4 +1,4 @@
-import type { Transaction } from "../../types/types";
+import type { SortOrder, Transaction } from "../../types/types";
 import { capitalize, formatDate, getDateTime } from "../../utils/utils";
 import { MdTrendingUp, MdTrendingDown } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
@@ -101,9 +101,7 @@ export const TransactionsList = ({
                         + {transaction.amount}
                       </span>
                     ) : (
-                      <span className={`${css.span} ${css.span_expense}`}>
-                        - {transaction.amount}
-                      </span>
+                      <span className={css.span}>- {transaction.amount}</span>
                     )}
                   </p>
                 </li>

@@ -2,5 +2,22 @@
     background-color: rgba(54, 54, 54, 0.7);
     padding: 20px;
     border-radius: 10px;
-    margin-bottom: 20px;
+    margin: 20px 0;
+    display: flex;
+    gap: 20px
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }

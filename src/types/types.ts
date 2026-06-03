@@ -1,7 +1,5 @@
 export type SortOrder = "asc" | "desc";
 
-export type SortField = "date" | "amount" | "type" | "category";
-
 export type Type = "income" | "expense";
 
 export interface Transaction {
@@ -41,7 +39,7 @@ export interface PatchTransaction {
 export interface QueryParams {
   page?: number;
   perPage?: number;
-  sortBy?: SortField;
+  sortBy?: string;
   sortOrder?: SortOrder;
   search?: string;
   startDate?: string;

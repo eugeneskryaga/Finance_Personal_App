@@ -7,7 +7,7 @@ import {
   CATEGORIES,
   EXPENSE_CATEGORIES,
   INCOME_CATEGORIES,
-} from "../constants/constants";
+} from "../../constants/constants";
 import { capitalize } from "../../utils/utils";
 
 import css from "./TransactionForm.module.css";

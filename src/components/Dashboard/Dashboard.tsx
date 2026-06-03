@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import type { InfiniteData } from "@tanstack/query-core";
 import { getTransactions } from "../../api/transactionsApi";
-import type { TransactionResponse } from "../../types/types";
+import type { SortOrder, TransactionResponse } from "../../types/types";
 import { useState } from "react";
 import { TransactionsList } from "../TransactionsList/TransactionsList";
 import { TransactionsListControls } from "../TransactionsListControls/TransactionsListControls";
@@ -14,6 +14,8 @@ import css from "./Dashboard.module.css";
 
 export const Dashboard = () => {
   const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState("date");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedSearch] = useDebounce(search, 500);
 
@@ -30,6 +32,8 @@ export const Dashboard = () => {
         getTransactions({
           perPage: 10,
           search: debouncedSearch,
+          sortBy,
+          sortOrder,
           page: pageParam,
         }),
       getNextPageParam: (lastPage, pages) =>

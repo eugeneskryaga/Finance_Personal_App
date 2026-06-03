@@ -34,9 +34,19 @@ textarea {
 }
 
 input, select, textarea {
+  color: whitesmoke;
+  width: 130px;
+  padding: 10px 6px;
   border: none;
   outline: none;
   font-size: 16px;
+  border-radius: 12px;
+    background: #363636;
+}
+
+input::placeholder {
+  color: whitesmoke;
+  opacity: 0.5;
 }
 
 input:focus, select:focus, textarea:focus {
