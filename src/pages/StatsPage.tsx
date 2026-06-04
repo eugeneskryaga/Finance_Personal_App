@@ -1,3 +1,5 @@
+import { Stats } from "../components/Stats/Stats";
+
 export const StatsPage = () => {
-  return <h1>Stats</h1>;
+  return <Stats />;
 };

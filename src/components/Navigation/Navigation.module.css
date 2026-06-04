@@ -1,6 +1,6 @@
 .nav_list {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     background-color: #363636;
     padding: 0 50px;
     width: 100%;

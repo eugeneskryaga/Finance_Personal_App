@@ -19,14 +19,6 @@ export const Navigation = () => {
         </li>
         <li>
           <NavLink
-            to="/view"
-            className={getLinkClass}
-          >
-            View
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
             to="/stats"
             className={getLinkClass}
           >

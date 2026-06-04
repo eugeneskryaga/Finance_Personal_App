@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "../Layout/Layout";
 import { DashboardPage } from "../../pages/DashboardPage";
-import { ViewPage } from "../../pages/ViewPage";
 import { StatsPage } from "../../pages/StatsPage";
 import { Notification } from "../Notification/Notification";
 
@@ -15,10 +14,6 @@ export const App = () => {
         <Route
           index
           element={<DashboardPage />}
-        />
-        <Route
-          path="/view"
-          element={<ViewPage />}
         />
         <Route
           path="/stats"
