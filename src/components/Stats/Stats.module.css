@@ -1,15 +1,6 @@
-.calendarContainer {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.addBtn {
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
 }
 
-.transactionsListContainer {
-    display: flex;
-    flex-direction: column;
-}
-
-.transactionsListContainer button {
-    margin-left: auto;
-}
