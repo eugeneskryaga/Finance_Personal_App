@@ -1,3 +1,10 @@
+.calendarContainer {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .transactionsListContainer {
     display: flex;
     flex-direction: column;

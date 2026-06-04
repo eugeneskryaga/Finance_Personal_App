@@ -27,7 +27,7 @@ export const Stats = () => {
 
   return (
     <>
-      <div>
+      <div className={css.calendarContainer}>
         <Calendar
           onChange={value => {
             setDate(value as Date);
@@ -38,6 +38,9 @@ export const Stats = () => {
           showNeighboringMonth={false}
           selectRange={false}
           maxDate={new Date()}
+          minDate={new Date(2026, 4, 1)}
+          prev2Label={null}
+          next2Label={null}
         />
       </div>
       {isModalOpen && (
