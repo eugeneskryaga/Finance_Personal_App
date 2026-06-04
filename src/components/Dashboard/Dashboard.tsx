@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import type { InfiniteData } from "@tanstack/query-core";
 import { getTransactions } from "../../api/transactionsApi";
-import type { SortOrder, TransactionResponse } from "../../types/types";
+import type { TransactionResponse } from "../../types/types";
 import { useState } from "react";
 import { TransactionsList } from "../TransactionsList/TransactionsList";
 import { TransactionsListControls } from "../TransactionsListControls/TransactionsListControls";
