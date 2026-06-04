@@ -1,3 +1,5 @@
+import type { Value } from "react-calendar/dist/shared/types.js";
+
 export type SortOrder = "asc" | "desc";
 
 export type Type = "income" | "expense";
@@ -18,6 +20,7 @@ export interface TransactionFormValues {
   category: string;
   amount: string;
   note: string;
+  date?: string;
 }
 
 export interface CreateTransaction {
@@ -25,7 +28,7 @@ export interface CreateTransaction {
   category: string;
   amount: number;
   note?: string;
-  date: string;
+  date: string | undefined;
 }
 
 export interface PatchTransaction {
@@ -42,8 +45,8 @@ export interface QueryParams {
   sortBy?: string;
   sortOrder?: SortOrder;
   search?: string;
-  startDate?: string;
-  endDate?: string;
+  startDate?: Value;
+  endDate?: Value;
 }
 
 export interface TransactionResponse {

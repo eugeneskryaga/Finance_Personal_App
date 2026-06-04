@@ -20,3 +20,18 @@ export const getDateTime = (date: string) =>
 
 export const capitalize = (string: string) =>
   string.charAt(0).toUpperCase() + string.slice(1);
+
+export const getDatesRange = (startDate: string, endDate: string) => {
+  const dates: string[] = [];
+
+  const currentDate = new Date(startDate);
+  const lastDate = new Date(endDate);
+
+  while (currentDate <= lastDate) {
+    dates.push(currentDate.toISOString().split("T")[0]);
+
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return dates;
+};

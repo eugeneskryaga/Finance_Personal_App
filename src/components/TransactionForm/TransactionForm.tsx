@@ -11,10 +11,12 @@ import {
 import { capitalize } from "../../utils/utils";
 
 import css from "./TransactionForm.module.css";
+import type { Value } from "react-calendar/dist/shared/types.js";
 
 interface Props {
   transaction?: Transaction;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  initialDate?: Value;
 }
 
 const validationSchema = Yup.object({
@@ -31,7 +33,11 @@ const validationSchema = Yup.object({
   note: Yup.string().max(100, "Note can have maximum 100 characters"),
 });
 
-export const TransactionForm = ({ transaction, setIsModalOpen }: Props) => {
+export const TransactionForm = ({
+  transaction,
+  setIsModalOpen,
+  initialDate,
+}: Props) => {
   const queryClient = useQueryClient();
 
   const initialValues: TransactionFormValues = {
@@ -39,14 +45,23 @@ export const TransactionForm = ({ transaction, setIsModalOpen }: Props) => {
     category: transaction?.category ?? CATEGORIES.expenses[0],
     amount: transaction?.amount.toString() ?? "",
     note: transaction?.note ?? "",
+    date:
+      transaction?.date ??
+      (initialDate && !Array.isArray(initialDate)
+        ? initialDate instanceof Date
+          ? initialDate.toISOString()
+          : new Date(initialDate).toISOString()
+        : new Date().toISOString()),
   };
 
   const mutation = useMutation({
     mutationFn: async (values: TransactionFormValues) => {
       const payload = {
-        ...values,
+        type: values.type,
+        category: values.category,
         amount: Number(values.amount),
         note: capitalize(values.note.trim()) || undefined,
+        date: values.date || undefined,
       };
 
       if (transaction?._id) {
@@ -55,7 +70,6 @@ export const TransactionForm = ({ transaction, setIsModalOpen }: Props) => {
 
       return postTransaction({
         ...payload,
-        date: new Date().toISOString(),
       });
     },
 
