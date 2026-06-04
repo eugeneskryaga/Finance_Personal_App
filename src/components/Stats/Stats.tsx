@@ -80,7 +80,10 @@ export const Stats = () => {
         </Modal>
       )}
       {startDate === endDate && response && response.transactions.length > 0 ? (
-        <TransactionsList transactions={response?.transactions} />
+        <TransactionsList
+          transactions={response?.transactions}
+          style={css.scrollFix}
+        />
       ) : startDate === endDate ? (
         <Notification message="There is no transactions for this day" />
       ) : null}

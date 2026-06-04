@@ -14,6 +14,7 @@ interface Props {
   hasNextPage?: boolean;
   isLoadingMore?: boolean;
   onSelectTransaction?: (transaction: Transaction) => void;
+  style?: string;
 }
 
 export const TransactionsList = ({
@@ -21,6 +22,7 @@ export const TransactionsList = ({
   loadMore,
   hasNextPage,
   isLoadingMore,
+  style,
 }: Props) => {
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null);
@@ -58,7 +60,7 @@ export const TransactionsList = ({
   return (
     <>
       <div
-        className={css.scrollWrapper}
+        className={`${css.scrollWrapper} ${style}`}
         ref={rootRef}
       >
         {

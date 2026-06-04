@@ -4,3 +4,6 @@
     margin-top: 20px;
 }
 
+.scrollFix {
+    max-height: 30vh;
+}
