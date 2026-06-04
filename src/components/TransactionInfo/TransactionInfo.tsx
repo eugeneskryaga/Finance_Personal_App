@@ -19,10 +19,9 @@ export const TransactionInfo = ({ transaction, onModalClose }: Props) => {
   const deleteMutation = useMutation({
     mutationFn: deleteTransaction,
     onSuccess: async () => {
-      (await queryClient.invalidateQueries({
-        queryKey: ["transactions"],
-      }),
-        onModalClose());
+      await queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      await queryClient.invalidateQueries({ queryKey: ["transactionsByDate"] });
+      onModalClose();
     },
   });
 

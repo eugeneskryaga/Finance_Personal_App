@@ -16,7 +16,8 @@ import type { Value } from "react-calendar/dist/shared/types.js";
 interface Props {
   transaction?: Transaction;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  initialDate?: Value;
+  initialDate?: Value | string;
+  onSuccess?: () => void;
 }
 
 const validationSchema = Yup.object({
@@ -37,6 +38,7 @@ export const TransactionForm = ({
   transaction,
   setIsModalOpen,
   initialDate,
+  onSuccess,
 }: Props) => {
   const queryClient = useQueryClient();
 
@@ -45,13 +47,7 @@ export const TransactionForm = ({
     category: transaction?.category ?? CATEGORIES.expenses[0],
     amount: transaction?.amount.toString() ?? "",
     note: transaction?.note ?? "",
-    date:
-      transaction?.date ??
-      (initialDate && !Array.isArray(initialDate)
-        ? initialDate instanceof Date
-          ? initialDate.toISOString()
-          : new Date(initialDate).toISOString()
-        : new Date().toISOString()),
+    date: transaction?.date ?? (initialDate as string),
   };
 
   const mutation = useMutation({
@@ -74,10 +70,8 @@ export const TransactionForm = ({
     },
 
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ["transactions"],
-      });
-
+      await queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      onSuccess?.();
       setIsModalOpen(false);
     },
   });

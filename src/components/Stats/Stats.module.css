@@ -1,0 +1,8 @@
+.transactionsListContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.transactionsListContainer button {
+    margin-left: auto;
+}

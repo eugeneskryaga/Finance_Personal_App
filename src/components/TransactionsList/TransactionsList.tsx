@@ -13,6 +13,7 @@ interface Props {
   loadMore?: () => Promise<unknown>;
   hasNextPage?: boolean;
   isLoadingMore?: boolean;
+  onSelectTransaction?: (transaction: Transaction) => void;
 }
 
 export const TransactionsList = ({
@@ -39,7 +40,7 @@ export const TransactionsList = ({
       },
       {
         root: rootRef.current,
-        rootMargin: "150px",
+        rootMargin: "50px",
       },
     );
 

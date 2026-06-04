@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Calendar from "react-calendar";
-import type { Value } from "react-calendar/dist/shared/types.js";
 import { useQuery } from "@tanstack/react-query";
 import { getTransactions } from "../../api/transactionsApi";
 import { Notification } from "../Notification/Notification";
@@ -9,31 +8,30 @@ import { Modal } from "../Modal/Modal";
 import { TransactionForm } from "../TransactionForm/TransactionForm";
 
 import "./сustom-calendar.css";
+import css from "./Stats.module.css";
 
 export const Stats = () => {
-  const [date, setDate] = useState<Value>(null);
+  const [date, setDate] = useState<Date | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data: response } = useQuery({
-    queryKey: ["transactionsByDate", date],
+  const { data: response, isLoading } = useQuery({
+    queryKey: ["transactions", date],
     queryFn: () =>
       getTransactions({
         perPage: 20,
         startDate: date,
         endDate: date,
       }),
+    enabled: !!date,
   });
 
-  const handleDateChange = (value: any) => {
-    setDate(value as Date | null);
-  };
   return (
     <>
       <div>
         <Calendar
           onChange={value => {
+            setDate(value as Date);
             setIsModalOpen(true);
-            handleDateChange(value);
           }}
           value={date}
           locale="en-US"
@@ -44,8 +42,13 @@ export const Stats = () => {
       </div>
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
-          {response && response.transactions.length > 0 ? (
-            <div>
+          {isLoading ? (
+            <Notification
+              message="Loading ..."
+              isLoading
+            />
+          ) : response && response.transactions.length > 0 ? (
+            <div className={css.transactionsListContainer}>
               <TransactionsList transactions={response.transactions} />
             </div>
           ) : (
@@ -53,7 +56,7 @@ export const Stats = () => {
               <Notification message="There is no transactions for this day" />
               <TransactionForm
                 setIsModalOpen={setIsModalOpen}
-                initialDate={date}
+                initialDate={new Date(date as Date).toISOString()}
               />
             </div>
           )}
