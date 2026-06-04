@@ -14,8 +14,6 @@ import css from "./Dashboard.module.css";
 
 export const Dashboard = () => {
   const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState("date");
-  const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedSearch] = useDebounce(search, 500);
 
@@ -32,8 +30,6 @@ export const Dashboard = () => {
         getTransactions({
           perPage: 10,
           search: debouncedSearch,
-          sortBy,
-          sortOrder,
           page: pageParam,
         }),
       getNextPageParam: (lastPage, pages) =>
