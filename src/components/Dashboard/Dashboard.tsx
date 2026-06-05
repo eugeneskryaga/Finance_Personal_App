@@ -74,7 +74,10 @@ export const Dashboard = () => {
       </button>
       {isModalOpen && (
         <Modal onClose={handleModalBtn}>
-          <TransactionForm setIsModalOpen={setIsModalOpen} />
+          <TransactionForm
+            setIsModalOpen={setIsModalOpen}
+            initialDate={new Date(Date.now()).toDateString()}
+          />
         </Modal>
       )}
     </div>

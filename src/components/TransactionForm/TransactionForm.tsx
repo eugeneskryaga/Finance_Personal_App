@@ -38,14 +38,13 @@ export const TransactionForm = ({
   transaction,
   setIsModalOpen,
   initialDate,
-  onSuccess,
 }: Props) => {
   const queryClient = useQueryClient();
 
   const initialValues: TransactionFormValues = {
     type: transaction?.type ?? "expense",
     category: transaction?.category ?? CATEGORIES.expenses[0],
-    amount: transaction?.amount.toString() ?? "",
+    amount: transaction?.amount?.toString() ?? "",
     note: transaction?.note ?? "",
     date: transaction?.date ?? (initialDate as string),
   };
@@ -71,7 +70,6 @@ export const TransactionForm = ({
 
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["transactions"] });
-      onSuccess?.();
       setIsModalOpen(false);
     },
   });
@@ -175,7 +173,7 @@ export const TransactionForm = ({
                   ? "Saving..."
                   : transaction
                     ? "Update"
-                    : "Create"}
+                    : "Add"}
               </button>
             </div>
           </Form>
