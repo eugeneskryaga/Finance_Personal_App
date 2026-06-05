@@ -10,6 +10,7 @@ import "./сustom-calendar.css";
 import css from "./Stats.module.css";
 import { TransactionForm } from "../TransactionForm/TransactionForm";
 import { Modal } from "../Modal/Modal";
+import { toLocaleISO } from "../../utils/utils";
 
 export const Stats = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -40,7 +41,7 @@ export const Stats = () => {
         const month = String(date.getMonth() + 1).padStart(2, "0");
         const day = String(date.getDate()).padStart(2, "0");
 
-        return `${year}-${month}-${day}T00:00:00`;
+        return `${year}-${month}-${day}T00:00:00.000Z`;
       };
 
       setStartDate(convertToMidnightString(start));
@@ -75,7 +76,7 @@ export const Stats = () => {
         <Modal onClose={() => setIsCreating(false)}>
           <TransactionForm
             setIsModalOpen={setIsCreating}
-            initialDate={startDate}
+            initialDate={toLocaleISO(new Date(startDate))}
           />
         </Modal>
       )}

@@ -1,5 +1,7 @@
-export const getCurrentDate = () => {
-  return new Date().toISOString();
+export const toLocaleISO = (date: Date) => {
+  const offsetMs = date.getTimezoneOffset();
+
+  return new Date(date.getTime() - offsetMs).toISOString();
 };
 
 export const formatDate = (date: string) => {

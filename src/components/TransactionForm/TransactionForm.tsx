@@ -11,12 +11,11 @@ import {
 import { capitalize } from "../../utils/utils";
 
 import css from "./TransactionForm.module.css";
-import type { Value } from "react-calendar/dist/shared/types.js";
 
 interface Props {
   transaction?: Transaction;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  initialDate?: Value | string;
+  initialDate?: string;
   onSuccess?: () => void;
 }
 
@@ -46,7 +45,7 @@ export const TransactionForm = ({
     category: transaction?.category ?? CATEGORIES.expenses[0],
     amount: transaction?.amount?.toString() ?? "",
     note: transaction?.note ?? "",
-    date: transaction?.date ?? (initialDate as string),
+    date: transaction?.date ?? initialDate,
   };
 
   const mutation = useMutation({
@@ -56,7 +55,7 @@ export const TransactionForm = ({
         category: values.category,
         amount: Number(values.amount),
         note: capitalize(values.note.trim()) || undefined,
-        date: values.date || undefined,
+        date: values.date || initialDate,
       };
 
       if (transaction?._id) {
