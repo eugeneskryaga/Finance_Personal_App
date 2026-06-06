@@ -1,96 +1,124 @@
-import { useState } from "react";
-import Calendar from "react-calendar";
-import { useQuery } from "@tanstack/react-query";
-import { getTransactions } from "../../api/transactionsApi";
-import { Notification } from "../Notification/Notification";
-import { TransactionsList } from "../TransactionsList/TransactionsList";
-import type { Value } from "react-calendar/dist/shared/types.js";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+} from "recharts";
+import type { Statistics } from "../../types/types";
 
-import "./сustom-calendar.css";
 import css from "./Stats.module.css";
-import { TransactionForm } from "../TransactionForm/TransactionForm";
-import { Modal } from "../Modal/Modal";
-import { toLocaleISO } from "../../utils/utils";
+import { capitalize } from "../../utils/utils";
 
-export const Stats = () => {
-  const [isCreating, setIsCreating] = useState(false);
-  const [dateRange, setDateRange] = useState<Value>(null);
-  const [startDate, setStartDate] = useState<string>(
-    new Date(Date.now()).toISOString(),
+interface Props {
+  statistics: Statistics;
+}
+
+export const Stats = ({ statistics }: Props) => {
+  const totalExpenses = statistics.expenses;
+
+  const chartData = Object.entries(statistics.expensesByCategory).map(
+    ([category, amount]) => ({
+      category: capitalize(category),
+      amount,
+      percent: ((amount / totalExpenses) * 100).toFixed(1),
+    }),
   );
-  const [endDate, setEndDate] = useState<string>("");
-
-  const { data: response } = useQuery({
-    queryKey: ["transactions", dateRange],
-    queryFn: () =>
-      getTransactions({
-        perPage: 20,
-        startDate,
-        endDate,
-      }),
-    retry: 1,
-  });
-
-  const handleRangeChange = (nextValue: Value) => {
-    setDateRange(nextValue);
-    if (Array.isArray(nextValue) && nextValue[0] && nextValue[1]) {
-      const [start, end] = nextValue;
-
-      const convertToMidnightString = (date: Date) => {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-
-        return `${year}-${month}-${day}T00:00:00.000Z`;
-      };
-
-      setStartDate(convertToMidnightString(start));
-      setEndDate(convertToMidnightString(end));
-    }
-  };
 
   return (
-    <>
-      <div className={css.calendarContainer}>
-        <Calendar
-          onChange={handleRangeChange}
-          value={dateRange}
-          locale="en-US"
-          showNeighboringMonth={false}
-          selectRange={true}
-          maxDate={new Date()}
-          minDate={new Date(2026, 4, 1)}
-          prev2Label={null}
-          next2Label={null}
-        />
+    <div className={css.statsContainer}>
+      <div className={css.summary}>
+        <div className={css.summaryCard}>
+          <span>Income</span>
+          <strong className={css.income}>+{statistics.income}</strong>
+        </div>
+        <div className={css.summaryCard}>
+          <span>Balance</span>
+          <strong
+            className={statistics.balance >= 0 ? css.income : css.expense}
+          >
+            {statistics.balance}
+          </strong>
+        </div>
+
+        <div className={css.summaryCard}>
+          <span>Expenses</span>
+          <strong className={css.expense}>-{statistics.expenses}</strong>
+        </div>
       </div>
-      {startDate === endDate && (
-        <button
-          onClick={() => setIsCreating(true)}
-          className={css.addBtn}
+      <div className={css.card}>
+        <h2 className={css.title}>Expenses by Category</h2>
+
+        <ResponsiveContainer
+          width="100%"
+          height={300}
         >
-          Add
-        </button>
-      )}
-      {isCreating && (
-        <Modal onClose={() => setIsCreating(false)}>
-          <TransactionForm
-            setIsModalOpen={setIsCreating}
-            initialDate={toLocaleISO(new Date(startDate))}
-          />
-        </Modal>
-      )}
-      {startDate === endDate && response && response.transactions.length > 0 ? (
-        <TransactionsList
-          transactions={response?.transactions}
-          style={css.scrollFix}
-        />
-      ) : startDate === endDate ? (
-        <Notification message="There is no transactions for this day" />
-      ) : null}
-      {startDate !== endDate && (
-        <Notification message="Тут будет блок статистики" />
-      )}
-    </>
+          <BarChart
+            data={chartData}
+            layout="vertical"
+            margin={{
+              top: 10,
+              right: 20,
+              left: 20,
+              bottom: 10,
+            }}
+          >
+            <CartesianGrid
+              stroke="#404040"
+              strokeDasharray="3 3"
+            />
+
+            <XAxis
+              type="number"
+              tick={{ fill: "#9CA3AF" }}
+              axisLine={false}
+              tickLine={false}
+            />
+
+            <YAxis
+              type="category"
+              dataKey="category"
+              width={110}
+              tick={{ fill: "#E5E7EB" }}
+              axisLine={false}
+              tickLine={false}
+            />
+
+            <Tooltip
+              contentStyle={{
+                background: "#2A2A2A",
+                border: "1px solid #404040",
+                borderRadius: "12px",
+                color: "#fff",
+              }}
+            />
+
+            <Bar
+              dataKey="amount"
+              fill="#22C55E"
+              radius={[0, 8, 8, 0]}
+            />
+          </BarChart>
+        </ResponsiveContainer>
+
+        <ul className={css.legend}>
+          {chartData.map(item => (
+            <li
+              key={item.category}
+              className={css.legendItem}
+            >
+              <div className={css.category}>
+                <span className={css.dot}></span>
+                <span>{capitalize(item.category)}</span>
+              </div>
+              <span className={css.amount}>{item.amount}</span>
+              <span className={css.percent}>{item.percent}%</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 };

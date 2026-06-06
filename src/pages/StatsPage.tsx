@@ -1,5 +1,5 @@
-import { Stats } from "../components/Stats/Stats";
+import { StatsCalendar } from "../components/StatsCalendar/StatsCalendar";
 
 export const StatsPage = () => {
-  return <Stats />;
+  return <StatsCalendar />;
 };

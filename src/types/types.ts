@@ -52,4 +52,12 @@ export interface TransactionResponse {
   isNextPageExists: boolean;
   totalPages: number;
   totalTransactions: number;
+  statistics: Statistics;
+}
+
+export interface Statistics {
+  income: number;
+  expenses: number;
+  balance: number;
+  expensesByCategory: Record<string, number>;
 }
