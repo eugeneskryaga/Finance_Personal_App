@@ -19,13 +19,13 @@ interface Props {
 export const Stats = ({ statistics }: Props) => {
   const totalExpenses = statistics.expenses;
 
-  const chartData = Object.entries(statistics.expensesByCategory).map(
-    ([category, amount]) => ({
+  const chartData = Object.entries(statistics.expensesByCategory)
+    .map(([category, amount]) => ({
       category: capitalize(category),
       amount,
       percent: ((amount / totalExpenses) * 100).toFixed(1),
-    }),
-  );
+    }))
+    .sort((a, b) => b.amount - a.amount);
 
   return (
     <div className={css.statsContainer}>
