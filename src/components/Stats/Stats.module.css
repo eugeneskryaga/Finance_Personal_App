@@ -1,7 +1,4 @@
 .statsContainer {
-  max-height: 40vh;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
   margin: 0 10px;
 }
 .card {

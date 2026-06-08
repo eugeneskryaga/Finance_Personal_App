@@ -48,7 +48,7 @@ export const StatsCalendar = () => {
   };
 
   return (
-    <>
+    <div className={css.container}>
       <div>
         <Calendar
           onChange={handleRangeChange}
@@ -89,6 +89,6 @@ export const StatsCalendar = () => {
       {startDate !== endDate && response && (
         <Stats statistics={response?.statistics} />
       )}
-    </>
+    </div>
   );
 };
