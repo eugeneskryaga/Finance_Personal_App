@@ -1,7 +1,7 @@
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import type { Transaction } from "../../types/types";
 import { capitalize, formatDate, getDateTime } from "../../utils/utils";
 import { MdTrendingUp, MdTrendingDown } from "react-icons/md";
-import { useEffect, useRef, useState } from "react";
 import { Modal } from "../Modal/Modal";
 import { TransactionInfo } from "../TransactionInfo/TransactionInfo";
 import { Notification } from "../Notification/Notification";
@@ -17,7 +17,7 @@ interface Props {
   style?: string;
 }
 
-export const TransactionsList = ({
+const TransactionsListComponent = ({
   transactions,
   loadMore,
   hasNextPage,
@@ -53,9 +53,9 @@ export const TransactionsList = ({
     };
   }, [loadMore, hasNextPage]);
 
-  const onModalClose = () => {
+  const onModalClose = useCallback(() => {
     setSelectedTransaction(null);
-  };
+  }, []);
 
   return (
     <>
@@ -115,3 +115,5 @@ export const TransactionsList = ({
     </>
   );
 };
+
+export const TransactionsList = memo(TransactionsListComponent);

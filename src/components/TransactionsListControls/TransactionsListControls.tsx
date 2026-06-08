@@ -1,3 +1,4 @@
+import { memo, useCallback, useMemo, type ChangeEvent } from "react";
 import { MdSearch } from "react-icons/md";
 import { MdOutlineArrowUpward, MdOutlineArrowDownward } from "react-icons/md";
 import type { SelectOption, SortOrder } from "../../types/types";
@@ -14,7 +15,7 @@ interface Props {
   setSortOrder: React.Dispatch<React.SetStateAction<SortOrder>>;
 }
 
-export const TransactionsListControls = ({
+const TransactionsListControlsComponent = ({
   search,
   setSearch,
   sortBy,
@@ -22,18 +23,34 @@ export const TransactionsListControls = ({
   setSortOrder,
   setSortBy,
 }: Props) => {
-  const sortOptions: SelectOption[] = [
-    { value: "date", label: "By Date" },
-    { value: "type", label: "By Type" },
-    { value: "category", label: "By Category" },
-    { value: "amount", label: "By Value" },
-  ];
+  const sortOptions = useMemo<SelectOption[]>(
+    () => [
+      { value: "date", label: "By Date" },
+      { value: "type", label: "By Type" },
+      { value: "category", label: "By Category" },
+      { value: "amount", label: "By Value" },
+    ],
+    [],
+  );
 
-  const defaultOption = sortOptions.find(option => option.value === sortBy);
+  const defaultOption = useMemo(
+    () => sortOptions.find(option => option.value === sortBy) ?? null,
+    [sortBy, sortOptions],
+  );
 
-  const handleChange = (option: SingleValue<SelectOption>) => {
-    if (option) setSortBy(option.value);
-  };
+  const handleChange = useCallback(
+    (option: SingleValue<SelectOption>) => {
+      if (option) setSortBy(option.value);
+    },
+    [setSortBy],
+  );
+
+  const handleSearchChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setSearch(event.target.value);
+    },
+    [setSearch],
+  );
 
   return (
     <div className={css.container}>
@@ -43,9 +60,7 @@ export const TransactionsListControls = ({
           type="text"
           placeholder="Search..."
           value={search}
-          onChange={e => {
-            setSearch(e.target.value);
-          }}
+          onChange={handleSearchChange}
           className={css.search}
         />
       </div>
@@ -77,3 +92,5 @@ export const TransactionsListControls = ({
     </div>
   );
 };
+
+export const TransactionsListControls = memo(TransactionsListControlsComponent);

@@ -1,8 +1,8 @@
+import { useCallback, useMemo, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import type { InfiniteData } from "@tanstack/query-core";
 import { getTransactions } from "../../api/transactionsApi";
 import type { SortOrder, TransactionResponse } from "../../types/types";
-import { useState } from "react";
 import { TransactionsList } from "../TransactionsList/TransactionsList";
 import { TransactionsListControls } from "../TransactionsListControls/TransactionsListControls";
 import { useDebounce } from "use-debounce";
@@ -43,11 +43,14 @@ export const Dashboard = () => {
       retry: 1,
     });
 
-  const handleModalBtn = () => {
+  const handleModalBtn = useCallback(() => {
     setIsModalOpen(prev => !prev);
-  };
+  }, []);
 
-  const transactions = data?.pages.flatMap(page => page.transactions) ?? [];
+  const transactions = useMemo(
+    () => data?.pages.flatMap(page => page.transactions) ?? [],
+    [data],
+  );
 
   return (
     <div className={css.container}>

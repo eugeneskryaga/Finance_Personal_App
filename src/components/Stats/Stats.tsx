@@ -1,3 +1,4 @@
+import { memo, useMemo } from "react";
 import {
   ResponsiveContainer,
   BarChart,
@@ -16,16 +17,23 @@ interface Props {
   statistics: Statistics;
 }
 
-export const Stats = ({ statistics }: Props) => {
-  const totalExpenses = statistics.expenses;
+const StatsComponent = ({ statistics }: Props) => {
+  const totalExpenses = useMemo(
+    () => statistics.expenses,
+    [statistics.expenses],
+  );
 
-  const chartData = Object.entries(statistics.expensesByCategory)
-    .map(([category, amount]) => ({
-      category: capitalize(category),
-      amount,
-      percent: ((amount / totalExpenses) * 100).toFixed(1),
-    }))
-    .sort((a, b) => b.amount - a.amount);
+  const chartData = useMemo(
+    () =>
+      Object.entries(statistics.expensesByCategory)
+        .map(([category, amount]) => ({
+          category: capitalize(category),
+          amount,
+          percent: ((amount / totalExpenses) * 100).toFixed(1),
+        }))
+        .sort((a, b) => b.amount - a.amount),
+    [statistics.expensesByCategory, totalExpenses],
+  );
 
   return (
     <div className={css.statsContainer}>
@@ -122,3 +130,5 @@ export const Stats = ({ statistics }: Props) => {
     </div>
   );
 };
+
+export const Stats = memo(StatsComponent);
