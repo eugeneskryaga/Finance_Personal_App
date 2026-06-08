@@ -2,6 +2,11 @@ export type SortOrder = "asc" | "desc";
 
 export type Type = "income" | "expense";
 
+export type SelectOption = {
+  value: string;
+  label: string;
+};
+
 export interface Transaction {
   _id: string;
   type: Type;

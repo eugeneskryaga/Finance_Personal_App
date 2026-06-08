@@ -1,4 +1,8 @@
-import type { Transaction, TransactionFormValues } from "../../types/types";
+import type {
+  SelectOption,
+  Transaction,
+  TransactionFormValues,
+} from "../../types/types";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Yup from "yup";
@@ -9,6 +13,7 @@ import {
   INCOME_CATEGORIES,
 } from "../../constants/constants";
 import { capitalize } from "../../utils/utils";
+import Select, { type SingleValue } from "react-select";
 
 import css from "./TransactionForm.module.css";
 
@@ -72,7 +77,6 @@ export const TransactionForm = ({
       setIsModalOpen(false);
     },
   });
-
   return (
     <Formik
       enableReinitialize
@@ -84,6 +88,15 @@ export const TransactionForm = ({
       {({ values, setFieldValue }) => {
         const categories =
           values.type === "income" ? CATEGORIES.income : CATEGORIES.expenses;
+
+        const categoryOptions: SelectOption[] = categories.map(category => ({
+          value: category,
+          label: capitalize(category),
+        }));
+
+        const selectedCategory =
+          categoryOptions.find(option => option.value === values.category) ??
+          null;
 
         return (
           <Form className={css.form}>
@@ -118,19 +131,22 @@ export const TransactionForm = ({
               </label>
             </div>
             <div className={css.category}>
-              <Field
-                as="select"
+              <Select
+                unstyled
+                classNames={{
+                  control: () => css.control,
+                  menu: () => css.menu,
+                  option: state =>
+                    state.isFocused ? css.optionFocused : css.option,
+                }}
+                options={categoryOptions}
+                value={selectedCategory}
+                onChange={(option: SingleValue<SelectOption>) =>
+                  setFieldValue("category", option?.value ?? "")
+                }
+                placeholder="Category"
                 name="category"
-              >
-                {categories.map(category => (
-                  <option
-                    key={category}
-                    value={category}
-                  >
-                    {capitalize(category)}
-                  </option>
-                ))}
-              </Field>
+              />
               <Field
                 type="text"
                 name="amount"

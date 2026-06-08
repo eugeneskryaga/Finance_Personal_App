@@ -1,8 +1,9 @@
 import { MdSearch } from "react-icons/md";
 import { MdOutlineArrowUpward, MdOutlineArrowDownward } from "react-icons/md";
+import type { SelectOption, SortOrder } from "../../types/types";
+import Select, { type SingleValue } from "react-select";
 
 import css from "./TransactionsListControls.module.css";
-import type { SortOrder } from "../../types/types";
 
 interface Props {
   search: string;
@@ -21,6 +22,19 @@ export const TransactionsListControls = ({
   setSortOrder,
   setSortBy,
 }: Props) => {
+  const sortOptions: SelectOption[] = [
+    { value: "date", label: "By Date" },
+    { value: "type", label: "By Type" },
+    { value: "category", label: "By Category" },
+    { value: "amount", label: "By Value" },
+  ];
+
+  const defaultOption = sortOptions.find(option => option.value === sortBy);
+
+  const handleChange = (option: SingleValue<SelectOption>) => {
+    if (option) setSortBy(option.value);
+  };
+
   return (
     <div className={css.container}>
       <div className={css.searchContainer}>
@@ -36,16 +50,17 @@ export const TransactionsListControls = ({
         />
       </div>
       <div className={css.sortContainer}>
-        <select
-          name="sort"
-          value={sortBy}
-          onChange={e => setSortBy(e.target.value)}
-        >
-          <option value="date">By Date</option>
-          <option value="type">By Type</option>
-          <option value="category">By Category</option>
-          <option value="amount">By Value</option>
-        </select>
+        <Select
+          unstyled
+          classNames={{
+            control: () => css.control,
+            menu: () => css.menu,
+            option: state => (state.isFocused ? css.optionFocused : css.option),
+          }}
+          options={sortOptions}
+          value={defaultOption}
+          onChange={handleChange}
+        />
         <button
           onClick={() => setSortOrder("asc")}
           className={sortOrder === "asc" ? css.activeBtn : ""}
