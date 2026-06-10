@@ -9,8 +9,6 @@ import { useDebounce } from "use-debounce";
 import { MdAdd } from "react-icons/md";
 import { TransactionForm } from "../TransactionForm/TransactionForm";
 import { Modal } from "../Modal/Modal";
-import { toLocaleISO } from "../../utils/utils";
-
 import css from "./Dashboard.module.css";
 import { Notification } from "../Notification/Notification";
 
@@ -79,10 +77,7 @@ export const Dashboard = () => {
       </button>
       {isModalOpen && (
         <Modal onClose={handleModalBtn}>
-          <TransactionForm
-            setIsModalOpen={setIsModalOpen}
-            initialDate={toLocaleISO(new Date())}
-          />
+          <TransactionForm setIsModalOpen={setIsModalOpen} />
         </Modal>
       )}
       {transactions.length === 0 && (

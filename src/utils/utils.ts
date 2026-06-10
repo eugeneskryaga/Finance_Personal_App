@@ -1,21 +1,36 @@
-export const toLocaleISO = (date: Date) => {
-  const offsetMs = date.getTimezoneOffset();
-
-  return new Date(date.getTime() - offsetMs).toISOString();
+export const convertToMidnightString = (date: Date) => {
+  const localMidnight = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+  );
+  return localMidnight.toISOString();
 };
 
-export const convertToMidnightString = (date: Date) => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
+export const convertDateToISO = (dateString: string): string => {
+  const [year, month, day] = dateString.split("-");
+  const date = new Date(Number(year), Number(month) - 1, Number(day));
 
-  return `${year}-${month}-${day}T00:00:00.000Z`;
+  const today = new Date();
+  const todayString = formatDateForInput(today);
+
+  if (dateString === todayString) {
+    return new Date().toISOString();
+  }
+
+  return convertToMidnightString(date);
 };
 
 export const getFirstDayOfCurrentMonth = () => {
-  const firstDay = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-  firstDay.setHours(firstDay.getHours() + 3);
-  return firstDay;
+  return new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+};
+
+export const formatDateForInput = (date: string | Date) => {
+  const dateObj = typeof date === "string" ? new Date(date) : date;
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const day = String(dateObj.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 };
 
 export const formatDate = (date: string) => {

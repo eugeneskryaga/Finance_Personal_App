@@ -2,24 +2,22 @@ import { useState } from "react";
 import Calendar from "react-calendar";
 import { useQuery } from "@tanstack/react-query";
 import { getTransactions } from "../../api/transactionsApi";
-import { Notification } from "../Notification/Notification";
-import { TransactionsList } from "../TransactionsList/TransactionsList";
 import type { Value } from "react-calendar/dist/shared/types.js";
-import { TransactionForm } from "../TransactionForm/TransactionForm";
 import { Stats } from "../Stats/Stats";
-import { Modal } from "../Modal/Modal";
 import {
   convertToMidnightString,
   getFirstDayOfCurrentMonth,
-  toLocaleISO,
 } from "../../utils/utils";
 
 import "./сustom-calendar.css";
 import css from "./StatsCalendar.module.css";
+import { Notification } from "../Notification/Notification";
 
 export const StatsCalendar = () => {
-  const [isCreating, setIsCreating] = useState(false);
-  const [dateRange, setDateRange] = useState<Value>(null);
+  const [dateRange, setDateRange] = useState<Value>([
+    getFirstDayOfCurrentMonth(),
+    new Date(),
+  ]);
   const [startDate, setStartDate] = useState<string>(
     convertToMidnightString(getFirstDayOfCurrentMonth()),
   );
@@ -62,32 +60,12 @@ export const StatsCalendar = () => {
           next2Label={null}
         />
       </div>
-      {startDate === endDate && (
-        <button
-          onClick={() => setIsCreating(true)}
-          className={css.addBtn}
-        >
-          Add
-        </button>
-      )}
-      {isCreating && (
-        <Modal onClose={() => setIsCreating(false)}>
-          <TransactionForm
-            setIsModalOpen={setIsCreating}
-            initialDate={toLocaleISO(new Date(startDate))}
-          />
-        </Modal>
-      )}
-      {startDate === endDate && response && response.transactions.length > 0 ? (
-        <TransactionsList
-          transactions={response?.transactions}
-          style={css.scrollFix}
-        />
-      ) : startDate === endDate ? (
-        <Notification message="There is no transactions for this day" />
-      ) : null}
-      {startDate !== endDate && response && (
-        <Stats statistics={response?.statistics} />
+      {dateRange && response && response.totalTransactions > 0 ? (
+        <Stats statistics={response.statistics} />
+      ) : (
+        response && (
+          <Notification message="There is no transactions for this period" />
+        )
       )}
     </div>
   );

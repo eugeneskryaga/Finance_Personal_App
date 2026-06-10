@@ -12,7 +12,11 @@ import {
   EXPENSE_CATEGORIES,
   INCOME_CATEGORIES,
 } from "../../constants/constants";
-import { capitalize } from "../../utils/utils";
+import {
+  capitalize,
+  formatDateForInput,
+  convertDateToISO,
+} from "../../utils/utils";
 import Select, { type SingleValue } from "react-select";
 
 import css from "./TransactionForm.module.css";
@@ -20,7 +24,6 @@ import css from "./TransactionForm.module.css";
 interface Props {
   transaction?: Transaction;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  initialDate?: string;
   onSuccess?: () => void;
 }
 
@@ -38,29 +41,33 @@ const validationSchema = Yup.object({
   note: Yup.string().max(100, "Note can have maximum 100 characters"),
 });
 
-export const TransactionForm = ({
-  transaction,
-  setIsModalOpen,
-  initialDate,
-}: Props) => {
+export const TransactionForm = ({ transaction, setIsModalOpen }: Props) => {
   const queryClient = useQueryClient();
+
+  const getTodayForInput = () => {
+    const today = new Date();
+    return formatDateForInput(today);
+  };
 
   const initialValues: TransactionFormValues = {
     type: transaction?.type ?? "expense",
     category: transaction?.category ?? CATEGORIES.expenses[0],
     amount: transaction?.amount?.toString() ?? "",
     note: transaction?.note ?? "",
-    date: transaction?.date ?? initialDate,
+    date: transaction?.date
+      ? formatDateForInput(transaction.date)
+      : getTodayForInput(),
   };
 
   const mutation = useMutation({
     mutationFn: async (values: TransactionFormValues) => {
+      const dateValue = values.date || getTodayForInput();
       const payload = {
         type: values.type,
         category: values.category,
         amount: Number(values.amount),
         note: capitalize(values.note.trim()) || undefined,
-        date: values.date || initialDate,
+        date: convertDateToISO(dateValue),
       };
 
       if (transaction?._id) {
@@ -98,8 +105,19 @@ export const TransactionForm = ({
           categoryOptions.find(option => option.value === values.category) ??
           null;
 
+        const minDate = formatDateForInput(new Date(2026, 4, 1));
+        const maxDate = formatDateForInput(new Date());
+
         return (
           <Form className={css.form}>
+            <div className={css.dateInput}>
+              <Field
+                type="date"
+                name="date"
+                min={minDate}
+                max={maxDate}
+              />
+            </div>
             <div className={css.type}>
               <label
                 className={values.type === "expense" ? css.activeExpense : ""}
@@ -158,7 +176,6 @@ export const TransactionForm = ({
                 className={css.error}
               />
             </div>
-
             <div className={css.textArea}>
               <Field
                 as="textarea"
