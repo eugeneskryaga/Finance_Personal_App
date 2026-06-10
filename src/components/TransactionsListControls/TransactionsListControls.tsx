@@ -26,7 +26,6 @@ const TransactionsListControlsComponent = ({
   const sortOptions = useMemo<SelectOption[]>(
     () => [
       { value: "date", label: "By Date" },
-      { value: "type", label: "By Type" },
       { value: "category", label: "By Category" },
       { value: "amount", label: "By Value" },
     ],

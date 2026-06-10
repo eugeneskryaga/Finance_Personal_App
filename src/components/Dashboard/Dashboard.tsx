@@ -12,6 +12,7 @@ import { Modal } from "../Modal/Modal";
 import { toLocaleISO } from "../../utils/utils";
 
 import css from "./Dashboard.module.css";
+import { Notification } from "../Notification/Notification";
 
 export const Dashboard = () => {
   const [search, setSearch] = useState("");
@@ -83,6 +84,9 @@ export const Dashboard = () => {
             initialDate={toLocaleISO(new Date())}
           />
         </Modal>
+      )}
+      {transactions.length === 0 && (
+        <Notification message="There is no transactions" />
       )}
     </div>
   );

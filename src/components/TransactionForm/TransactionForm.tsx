@@ -148,7 +148,7 @@ export const TransactionForm = ({
                 name="category"
               />
               <Field
-                type="text"
+                type="number"
                 name="amount"
                 placeholder="Amount"
               />
