@@ -1,4 +1,4 @@
-import type { Transaction } from "../../types/types";
+import type { Transaction } from "../../types/transactions";
 import { capitalize, formatDate, getDateTime } from "../../utils/utils";
 import { Notification } from "../Notification/Notification";
 import { MdTrendingUp, MdTrendingDown } from "react-icons/md";

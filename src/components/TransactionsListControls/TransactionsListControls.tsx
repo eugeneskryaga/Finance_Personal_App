@@ -1,7 +1,7 @@
 import { memo, useCallback, useMemo, type ChangeEvent } from "react";
 import { MdSearch } from "react-icons/md";
 import { MdOutlineArrowUpward, MdOutlineArrowDownward } from "react-icons/md";
-import type { SelectOption, SortOrder } from "../../types/types";
+import type { SelectOption, SortOrder } from "../../types/transactions";
 import Select, { type SingleValue } from "react-select";
 
 import css from "./TransactionsListControls.module.css";

@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import type { InfiniteData } from "@tanstack/query-core";
 import { getTransactions } from "../../api/transactionsApi";
-import type { SortOrder, TransactionResponse } from "../../types/types";
+import type { SortOrder, TransactionResponse } from "../../types/transactions";
 import { TransactionsList } from "../TransactionsList/TransactionsList";
 import { TransactionsListControls } from "../TransactionsListControls/TransactionsListControls";
 import { useDebounce } from "use-debounce";

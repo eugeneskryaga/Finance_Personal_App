@@ -1,17 +1,11 @@
-import axios from "axios";
+import { api } from "./api";
 import type {
   CreateTransaction,
   PatchTransaction,
   QueryParams,
   Transaction,
   TransactionResponse,
-} from "../types/types";
-
-const BASE_URL = "https://finance-app-server-gt1n.onrender.com";
-
-const api = axios.create({
-  baseURL: BASE_URL,
-});
+} from "../types/transactions";
 
 export const getTransactions = async (params: QueryParams) => {
   const { data } = await api.get<TransactionResponse>("/transactions", {

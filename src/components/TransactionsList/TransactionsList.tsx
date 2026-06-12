@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useRef, useState } from "react";
-import type { Transaction } from "../../types/types";
+import type { Transaction } from "../../types/transactions";
 import { capitalize, formatDate, getDateTime } from "../../utils/utils";
 import { MdTrendingUp, MdTrendingDown } from "react-icons/md";
 import { Modal } from "../Modal/Modal";
